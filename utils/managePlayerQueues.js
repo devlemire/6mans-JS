@@ -13,8 +13,14 @@ function createQueue() {
     },
     teamCreationInProgress: false,
     teams: {
-      blue: [],
-      orange: [],
+      blue: {
+        players: [],
+        captain: undefined,
+      },
+      orange: {
+        players: [],
+        captain: undefined,
+      },
     },
     lobby: {
       id: ++lobbyId,

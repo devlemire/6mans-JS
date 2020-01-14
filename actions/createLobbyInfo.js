@@ -4,11 +4,10 @@ const { deletePlayerQueue } = require('../utils/managePlayerQueues')
 module.exports = (eventObj, queue) => {
   const { teams, lobby } = queue
 
-  const randomTeam = randomNumber(1)
+  const randomTeam = randomNumber(1) === 0 ? 'blue' : 'orange'
   const randomPlayer = randomNumber(2)
-  const indexToTeam = ['blue', 'orange']
 
-  const creatorId = teams[indexToTeam[randomTeam]][randomPlayer].id
+  const creatorId = teams[randomTeam][randomPlayer].id
 
   function sendLobbyInfo(players) {
     players.forEach(player => {
@@ -20,11 +19,11 @@ module.exports = (eventObj, queue) => {
           fields: [
             {
               name: 'Blue',
-              value: teams.blue.map(playerObj => `<@${playerObj.id}>`).join(', '),
+              value: teams.blue.players.map(playerObj => `<@${playerObj.id}>`).join(', '),
             },
             {
               name: 'Orange',
-              value: teams.orange.map(playerObj => `<@${playerObj.id}>`).join(', '),
+              value: teams.orange.players.map(playerObj => `<@${playerObj.id}>`).join(', '),
             },
             {
               name: 'Creates the lobby',
@@ -54,7 +53,7 @@ module.exports = (eventObj, queue) => {
     })
   }
 
-  sendLobbyInfo(teams.blue)
-  sendLobbyInfo(teams.orange)
+  sendLobbyInfo(teams.blue.players)
+  sendLobbyInfo(teams.orange.players)
   deletePlayerQueue(lobby.id)
 }

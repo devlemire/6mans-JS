@@ -38,9 +38,7 @@ module.exports = (eventObj, queue) => {
     } else {
       const random = randomNumber(1)
 
-      channel.send(
-        `You voting resulted in a tie. I will choose the team structure at random.`
-      )
+      channel.send(`The voting resulted in a tie. I will choose the team structure at random.`)
 
       if (random === 0) {
         createRandomTeams(eventObj, queue)
