@@ -1,35 +1,15 @@
 // Dependencies
 const Discord = require('discord.js')
 const token = require('./token')
-const randomstring = require('randomstring')
 
 // Actions
 const { enterQueue, leaveQueue, getQueueStatus, getVoteStatus, submitVote } = require('./actions')
 
+// Queue Managment
+const { determinePlayerQueue } = require('./utils/managePlayerQueues')
+
 // Discord Bot
 const bot = new Discord.Client()
-
-let lobbyId = 0
-let lobbyPassword = randomstring.generate({ length: 3 }).toLowerCase()
-
-let queue = {
-  players: [],
-  votes: {
-    r: 0,
-    c: 0,
-    playersWhoVoted: [],
-  },
-  teamCreationInProgress: false,
-  teams: {
-    blue: [],
-    orange: [],
-  },
-  lobby: {
-    id: lobbyId,
-    name: `smjs${lobbyId}`,
-    password: lobbyPassword,
-  },
-}
 
 bot.on('ready', e => {
   const { username, id } = bot.user
@@ -37,14 +17,32 @@ bot.on('ready', e => {
 })
 
 bot.on('message', eventObj => {
-  // console.log('message received', Object.keys(eventObj))
-  // console.log('message received', eventObj.content)
-  const msg = eventObj.content.toLowerCase()
+  const msg = eventObj.content.trim().toLowerCase()
   const isCommand = msg.startsWith('!')
 
+  // If this is not a command, we don't give a f**k about what happens
+  // See ya l8r virgin
   if (!isCommand) return
 
-  switch (msg.split(' ')[0]) {
+  const channel = eventObj.author.lastMessage.channel
+  const command = msg.split(' ')[0]
+  const playerId = eventObj.author.id
+  const queue = determinePlayerQueue(playerId, command, channel)
+  const validCommands = {
+    '!q': true,
+    '!leave': true,
+    '!status': true,
+    '!votestatus': true,
+    '!r': true,
+    '!c': true,
+  }
+
+  if (isCommand && !queue && validCommands[command]) {
+    channel.send('There are currently no active queues. Type !q to create the first one!')
+    return
+  }
+
+  switch (command) {
     case '!q':
       enterQueue(eventObj, queue)
       break
@@ -64,6 +62,8 @@ bot.on('message', eventObj => {
     default:
       return
   }
+
+  console.log('Found queue:', queue)
 })
 
 bot.on('disconnect', e => {

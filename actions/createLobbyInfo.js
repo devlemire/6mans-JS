@@ -1,4 +1,5 @@
 const randomNumber = require('../utils/randomNumber')
+const { deletePlayerQueue } = require('../utils/managePlayerQueues')
 
 module.exports = (eventObj, queue) => {
   const { teams, lobby } = queue
@@ -55,4 +56,5 @@ module.exports = (eventObj, queue) => {
 
   sendLobbyInfo(teams.blue)
   sendLobbyInfo(teams.orange)
+  deletePlayerQueue(lobby.id)
 }

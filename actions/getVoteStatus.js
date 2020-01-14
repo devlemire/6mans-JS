@@ -7,6 +7,8 @@ module.exports = (eventObj, queue) => {
 
   if (players.length === 0 || userIndexInPlayers === -1) {
     channel.send(`You have not entered the queue <@${userId}>`)
+  } else if (players.length < 6) {
+    channel.send(`6 players have not been found yet.`)
   } else {
     channel.send({
       embed: {

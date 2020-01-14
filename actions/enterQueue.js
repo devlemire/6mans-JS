@@ -1,7 +1,7 @@
 const startVote = require('./startVote')
 
 module.exports = (eventObj, queue) => {
-  const { players } = queue
+  const { players, playerIdsIndexed } = queue
   const channel = eventObj.author.lastMessage.channel
   const userId = eventObj.author.id
   const username = eventObj.author.username
@@ -17,6 +17,7 @@ module.exports = (eventObj, queue) => {
     // REMOVE ME WHEN DEBUGGING COMPLETE
 
     // players.push({ id: userId, username, dmPlayer })
+    playerIdsIndexed[userId] = true
 
     if (players.length === 6) {
       startVote(eventObj, queue)
