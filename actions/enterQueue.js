@@ -1,33 +1,35 @@
 const startVote = require('./startVote')
 
-module.exports = (eventObj, { queue }) => {
+module.exports = (eventObj, queue) => {
+  const { players } = queue
   const channel = eventObj.author.lastMessage.channel
   const userId = eventObj.author.id
   const username = eventObj.author.username
+  const dmPlayer = msg => eventObj.author.send(msg)
 
-  if (queue.length === 0) {
+  if (players.length === 0) {
     // REMOVE ME WHEN DEBUGGING COMPLETE
-    queue.push(
+    players.push(
       ...Array.from({ length: 6 }).map(_ => {
-        return { id: userId, username }
+        return { id: userId, username, dmPlayer }
       })
     )
     // REMOVE ME WHEN DEBUGGING COMPLETE
 
-    // queue.push({ id: userId, username })
+    // players.push({ id: userId, username, dmPlayer })
 
-    if (queue.length === 6) {
-      startVote(eventObj, { queue })
+    if (players.length === 6) {
+      startVote(eventObj, queue)
     } else {
       channel.send(`You have entered the queue <@${userId}>`)
     }
   } else {
-    const isInQueue = queue.some(userObj => userObj.id === userId)
+    const isInQueue = players.some(userObj => userObj.id === userId)
 
     if (isInQueue) {
       channel.send(`You are already in the queue <@${userId}>`)
     } else {
-      queue.push({ id: userId, username })
+      players.push({ id: userId, username, dmPlayer })
       channel.send(`You have entered the queue <@${userId}>`)
     }
   }

@@ -1,20 +1,21 @@
-module.exports = (eventObj, { queue, votes }) => {
+module.exports = (eventObj, queue) => {
+  const { players, votes } = queue
   const channel = eventObj.author.lastMessage.channel
   const userId = eventObj.author.id
-  const userIndexInQueue = queue.findIndex(userObj => userObj.id === userId)
+  const userIndexInPlayers = players.findIndex(userObj => userObj.id === userId)
+  const remainingVotesRequired = 6 - (votes.r + votes.c)
 
-  if (queue.length === 0 || userIndexInQueue === -1) {
+  if (players.length === 0 || userIndexInPlayers === -1) {
     channel.send(`You have not entered the queue <@${userId}>`)
   } else {
     channel.send({
       embed: {
         color: 2201331,
-        title: 'Vote status',
+        title: `Vote status - ${remainingVotesRequired} votes remaining`,
         description: 'The current vote count is:',
         fields: [
-          { name: 'Random Teams', value: '0', inline: true },
-          { name: 'Captains', value: '0', inline: true },
-          { name: 'Balanced Teams', value: '0', inline: true },
+          { name: 'Random Teams', value: votes.r, inline: true },
+          { name: 'Captains', value: votes.c, inline: true },
         ],
       },
     })

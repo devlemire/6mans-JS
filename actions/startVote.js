@@ -1,9 +1,10 @@
-const queueToMentions = require('../utils/queueToMentions')
+const playersToMentions = require('../utils/playersToMentions')
 
-module.exports = (eventObj, { queue }) => {
+module.exports = (eventObj, queue) => {
+  const { players } = queue
   const channel = eventObj.author.lastMessage.channel
 
-  channel.send(queueToMentions(queue))
+  channel.send(playersToMentions(players))
 
   channel.send({
     embed: {
@@ -13,7 +14,6 @@ module.exports = (eventObj, { queue }) => {
       fields: [
         { name: 'Vote for random teams', value: '!r', inline: true },
         { name: 'Vote for captains', value: '!c', inline: true },
-        { name: 'Vote for balanced teams', value: '!b', inline: true },
         {
           name: 'Vote Status',
           value: 'You can check the vote status by typing !votestatus',
