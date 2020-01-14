@@ -9,6 +9,7 @@ const { enterQueue, leaveQueue, getQueueStatus } = require('./actions')
 const bot = new Discord.Client()
 
 let queue = []
+let lobbyId = 0
 
 bot.on('ready', e => {
   const { username, id } = bot.user
@@ -25,13 +26,13 @@ bot.on('message', eventObj => {
 
   switch (msg.split(' ')[0]) {
     case '!q':
-      enterQueue(eventObj, queue)
+      enterQueue(eventObj, { queue, lobbyId })
       break
     case '!leave':
-      leaveQueue(eventObj, queue)
+      leaveQueue(eventObj, { queue, lobbyId })
       break
     case '!status':
-      getQueueStatus(eventObj, queue)
+      getQueueStatus(eventObj, { queue, lobbyId })
       break
     default:
       return

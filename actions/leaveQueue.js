@@ -1,4 +1,4 @@
-module.exports = (eventObj, queue) => {
+module.exports = (eventObj, { queue }) => {
   const channel = eventObj.author.lastMessage.channel
   const userId = eventObj.author.id
   const userIndexInQueue = queue.findIndex(userObj => userObj.id === userId)
