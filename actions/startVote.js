@@ -10,11 +10,14 @@ module.exports = (eventObj, { queue }) => {
       color: 2201331,
       title: '6 players found',
       description: 'Please vote for your desired team structure.',
-      footer: 'You can check the vote status by typing !votestatus',
       fields: [
         { name: 'Vote for random teams', value: '!r', inline: true },
         { name: 'Vote for captains', value: '!c', inline: true },
         { name: 'Vote for balanced teams', value: '!b', inline: true },
+        {
+          name: 'Vote Status',
+          value: 'You can check the vote status by typing !votestatus',
+        },
       ],
     },
   })
