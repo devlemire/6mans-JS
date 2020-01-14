@@ -1,0 +1,18 @@
+{
+  "name": "6mans-javascript",
+  "version": "1.0.0",
+  "description": "A copy of the 6mans bot coded in JavaScript",
+  "main": "index.js",
+  "repository": "git@github.com:devlemire/6mans-JS.git",
+  "author": "James L",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "scripts": {
+    "start": "nodemon"
+  }
+}
