@@ -7,7 +7,7 @@ module.exports = (eventObj, queue) => {
   const randomTeam = randomNumber(1) === 0 ? 'blue' : 'orange'
   const randomPlayer = randomNumber(2)
 
-  const creatorId = teams[randomTeam][randomPlayer].id
+  const creatorId = teams[randomTeam].players[randomPlayer].id
 
   function sendLobbyInfo(players) {
     players.forEach(player => {

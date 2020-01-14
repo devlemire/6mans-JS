@@ -11,7 +11,6 @@ function createQueue() {
       c: 0,
       playersWhoVoted: [],
     },
-    teamCreationInProgress: false,
     teams: {
       blue: {
         players: [],

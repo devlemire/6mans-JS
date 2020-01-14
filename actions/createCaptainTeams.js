@@ -1,8 +1,12 @@
 const randomNumber = require('../utils/randomNumber')
 const createLobbyInfo = require('./createLobbyInfo')
 
-module.exports = (eventObj, queue) => {
-  const { players, teams } = queue
+const playersToMentions = players => {
+  return players.map((playerObj, index) => `${index}: <@${playerObj.id}>`).join('\n')
+}
+
+module.exports = async (eventObj, queue) => {
+  let { players, teams } = queue
   const channel = eventObj.author.lastMessage.channel
 
   // Randomly choose Blue Captain
@@ -23,13 +27,65 @@ module.exports = (eventObj, queue) => {
 
   // Direct message the first pick captain
   // First pick gets to select 1 player
-  teams[firstPick].captain.dmPlayer('test')
+  const message = await teams[firstPick].captain.dmPlayer('Choose ONE player to be on your team by clicking an emoji:\n' + playersToMentions(players))
+  await message.react('0️⃣')
+  await message.react('1️⃣')
+  await message.react('2️⃣')
+  await message.react('3️⃣')
 
-  // Direct message the second pick captain
-  // Second pick gets to select 2 players
+  const firstPickCollector = message.createReactionCollector((reaction, user) => {
+    const validReactions = ['0️⃣', '1️⃣', '2️⃣', '3️⃣']
+    return validReactions.includes(reaction.emoji.name) && user.id === teams[firstPick].captain.id
+  })
 
-  // Assign the last remaining player in the first pick's team
+  firstPickCollector.on('collect', async reaction => {
+    const emojiToIndex = {
+      '0️⃣': 0,
+      '1️⃣': 1,
+      '2️⃣': 2,
+      '3️⃣': 3,
+    }
 
-  channel.send('captain teams executed')
-  // createLobbyInfo()
+    teams[firstPick].players.push(players[emojiToIndex[reaction.emoji.name]])
+    players.splice(emojiToIndex[reaction.emoji.name], 1)
+
+    firstPickCollector.stop()
+
+    // Direct message the second pick captain
+    // Second pick gets to select 2 players
+    const message = await teams[secondPick].captain.dmPlayer('Choose TWO players to be on your team by clicking an emoji:\n' + playersToMentions(players))
+    await message.react('0️⃣')
+    await message.react('1️⃣')
+    await message.react('2️⃣')
+
+    const secondPickCollector = message.createReactionCollector((reaction, user) => {
+      const validReactions = ['0️⃣', '1️⃣', '2️⃣']
+      return validReactions.includes(reaction.emoji.name) && user.id === teams[secondPick].captain.id
+    })
+
+    let pickCount = 0
+
+    secondPickCollector.on('collect', reaction => {
+      const player = players[emojiToIndex[reaction.emoji.name]]
+
+      if (player) {
+        teams[secondPick].players.push(players[emojiToIndex[reaction.emoji.name]])
+        players[emojiToIndex[reaction.emoji.name]] = undefined
+        pickCount += 1
+
+        if (pickCount === 2) {
+          // Assign the last remaining player in the first pick's team
+          const player = players.find(playerObj => !!playerObj)
+          teams[firstPick].players.push(player)
+          players = []
+
+          // Create the lobby
+          createLobbyInfo(eventObj, queue)
+
+          // Stop the emoji collector
+          secondPickCollector.stop()
+        }
+      }
+    })
+  })
 }

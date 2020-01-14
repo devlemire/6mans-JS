@@ -5,18 +5,10 @@ module.exports = (eventObj, queue) => {
   const channel = eventObj.author.lastMessage.channel
   const userId = eventObj.author.id
   const username = eventObj.author.username
-  const dmPlayer = msg => eventObj.author.send(msg)
+  const dmPlayer = async msg => await eventObj.author.send(msg)
 
   if (players.length === 0) {
-    // REMOVE ME WHEN DEBUGGING COMPLETE
-    players.push(
-      ...Array.from({ length: 6 }).map(_ => {
-        return { id: userId, username, dmPlayer }
-      })
-    )
-    // REMOVE ME WHEN DEBUGGING COMPLETE
-
-    // players.push({ id: userId, username, dmPlayer })
+    players.push({ id: userId, username, dmPlayer })
     playerIdsIndexed[userId] = true
 
     if (players.length === 6) {

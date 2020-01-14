@@ -17,11 +17,7 @@ module.exports = (eventObj, queue) => {
       .split('!')[1]
 
     if (!votes.playersWhoVoted[userId]) {
-      // REMOVE ME WHEN DEBUGGING COMPLETE
-      votes[vote] = 6
-      // REMOVE ME WHEN DEBUGGING COMPLETE
-
-      // votes[vote]++
+      votes[vote]++
       votes.playersWhoVoted[userId] = true
     } else {
       channel.send(`You cannot vote because you already voted <@${userId}>`)
@@ -29,8 +25,6 @@ module.exports = (eventObj, queue) => {
   }
 
   if (votes.c + votes.r === 6) {
-    queue.teamCreationInProgress = true
-
     if (votes.r > votes.c) {
       createRandomTeams(eventObj, queue)
     } else if (votes.c > votes.r) {

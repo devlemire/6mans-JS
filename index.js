@@ -63,7 +63,7 @@ bot.on('message', eventObj => {
       return
   }
 
-  console.log('Found queue:', queue)
+  // console.log('Found queue:', queue)
 })
 
 bot.on('disconnect', e => {
