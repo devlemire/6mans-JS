@@ -1,12 +1,12 @@
 module.exports = (eventObj, queue) => {
   const { players, votes } = queue
   const channel = eventObj.author.lastMessage.channel
-  const userId = eventObj.author.id
-  const userIndexInPlayers = players.findIndex(userObj => userObj.id === userId)
+  const playerId = eventObj.author.id
+  const userIndexInPlayers = players.findIndex(playerObj => playerObj.id === playerId)
   const remainingVotesRequired = 6 - (votes.r + votes.c)
 
   if (players.length === 0 || userIndexInPlayers === -1) {
-    channel.send(`You have not entered the queue <@${userId}>`)
+    channel.send(`You have not entered the queue <@${playerId}>`)
   } else if (players.length < 6) {
     channel.send(`6 players have not been found yet.`)
   } else {

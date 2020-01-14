@@ -5,22 +5,22 @@ const randomNumber = require('../utils/randomNumber')
 module.exports = (eventObj, queue) => {
   const { players, votes } = queue
   const channel = eventObj.author.lastMessage.channel
-  const userId = eventObj.author.id
-  const userIndexInPlayers = players.findIndex(userObj => userObj.id === userId)
+  const playerId = eventObj.author.id
+  const userIndexInPlayers = players.findIndex(playerObj => playerObj.id === playerId)
 
   if (players.length === 0 || userIndexInPlayers === -1) {
-    channel.send(`You cannot vote because you aren't in the queue <@${userId}>`)
+    channel.send(`You cannot vote because you aren't in the queue <@${playerId}>`)
   } else {
     const vote = eventObj.content
       .toLowerCase()
       .trim()
       .split('!')[1]
 
-    if (!votes.playersWhoVoted[userId]) {
+    if (!votes.playersWhoVoted[playerId]) {
       votes[vote]++
-      votes.playersWhoVoted[userId] = true
+      votes.playersWhoVoted[playerId] = true
     } else {
-      channel.send(`You cannot vote because you already voted <@${userId}>`)
+      channel.send(`You cannot vote because you already voted <@${playerId}>`)
     }
   }
 
