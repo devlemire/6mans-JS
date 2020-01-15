@@ -6,7 +6,7 @@ const playersToMentions = players => {
 }
 
 module.exports = async (eventObj, queue) => {
-  let { players, teams } = queue
+  let { players, teams, lobby } = queue
   const channel = eventObj.author.lastMessage.channel
 
   // Randomly choose Blue Captain
@@ -20,6 +20,19 @@ module.exports = async (eventObj, queue) => {
   teams.orange.players.push(players[orangeCaptainIndex])
   teams.orange.captain = players[orangeCaptainIndex]
   players.splice(orangeCaptainIndex, 1)
+
+  // Tell the server that captain mode was chosen
+  channel.send({
+    embed: {
+      color: 2201331,
+      title: `Lobby #${lobby.id} - Captain Structure`,
+      description: 'The vote resulted in captain structure. The following are your captains:',
+      fields: [
+        { name: 'Captain Blue', value: `<@${teams.blue.captain.id}>` },
+        { name: 'Captain Orange', value: `<@$${teams.orange.captain.id}>` },
+      ],
+    },
+  })
 
   // Randomly choose first and second pick
   const firstPick = randomNumber(1) === 0 ? 'blue' : 'orange'

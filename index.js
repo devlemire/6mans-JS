@@ -3,7 +3,7 @@ require('dotenv').config({ path: `${__dirname}/.env` })
 const Discord = require('discord.js')
 
 // Actions
-const { enterQueue, leaveQueue, getQueueStatus, getVoteStatus, submitVote } = require('./actions')
+const { enterQueue, leaveQueue, getQueueStatus, getVoteStatus, submitVote, sendCommandList } = require('./actions')
 
 // Queue Managment
 const { determinePlayerQueue } = require('./utils/managePlayerQueues')
@@ -35,41 +35,43 @@ bot.on('message', eventObj => {
   const playerId = eventObj.author.id
   const queue = determinePlayerQueue(playerId, command, channel)
   const validCommands = {
-    '!q': true,
-    '!leave': true,
-    '!status': true,
-    '!votestatus': true,
-    '!r': true,
-    '!c': true,
+    '!6m-q': true,
+    '!6m-leave': true,
+    '!6m-status': true,
+    '!6m-votestatus': true,
+    '!6m-r': true,
+    '!6m-c': true,
   }
 
   if (isCommand && !queue && validCommands[command]) {
-    channel.send('There are currently no active queues. Type !q to create the first one!')
+    channel.send('There are currently no active queues. Type !6m-q to create the first one!')
     return
   }
 
   switch (command) {
-    case '!q':
+    case '!6m-q':
       enterQueue(eventObj, queue)
       break
-    case '!leave':
+    case '!6m-leave':
       leaveQueue(eventObj, queue)
       break
-    case '!status':
+    case '!6m-status':
       getQueueStatus(eventObj, queue)
       break
-    case '!votestatus':
+    case '!6m-votestatus':
       getVoteStatus(eventObj, queue)
       break
-    case '!r':
-    case '!c':
+    case '!6m-r':
+    case '!6m-c':
       submitVote(eventObj, queue)
       break
+    case '!6m-help':
+      sendCommandList(eventObj)
     default:
       return
   }
 
-  console.log('Found queue:', queue)
+  // console.log('Found queue:', queue)
 })
 
 bot.on('disconnect', e => {

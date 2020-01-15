@@ -32,12 +32,12 @@ function createQueue() {
 let queues = []
 
 const determinePlayerQueue = (playerId, command, channel) => {
-  if (queues.length === 0 && command === '!q') {
+  if (queues.length === 0 && command === '!6m-q') {
     const queue = createQueue()
     queues.push(queue)
 
     return queue
-  } else if (queues.length === 0 && command !== '!q') {
+  } else if (queues.length === 0 && command !== '!6m-q') {
     return undefined
   }
 

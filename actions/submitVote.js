@@ -15,6 +15,7 @@ module.exports = (eventObj, queue) => {
       .toLowerCase()
       .trim()
       .split('!')[1]
+      .split('-')[1]
 
     if (!votes.playersWhoVoted[playerId]) {
       votes[vote]++
