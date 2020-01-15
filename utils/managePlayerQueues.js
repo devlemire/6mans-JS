@@ -47,7 +47,16 @@ const determinePlayerQueue = (playerId, command, channel) => {
     return playersQueue
   } else {
     // Player is not in a queue yet
-    return queues.find(queueObj => queueObj.players.length < 6)
+    const notFullQueue = queues.find(queueObj => queueObj.players.length < 6)
+
+    if (notFullQueue) {
+      return notFullQueue
+    } else {
+      const queue = createQueue()
+      queues.push(queue)
+
+      return queue
+    }
   }
 }
 
