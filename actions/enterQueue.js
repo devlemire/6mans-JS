@@ -10,12 +10,7 @@ module.exports = (eventObj, queue) => {
   if (players.length === 0) {
     players.push({ id: playerId, username, dmPlayer })
     playerIdsIndexed[playerId] = true
-
-    if (players.length === 6) {
-      startVote(eventObj, queue)
-    } else {
-      channel.send(`You have entered the queue <@${playerId}>`)
-    }
+    channel.send(`You have entered the queue <@${playerId}>`)
   } else {
     const isInQueue = players.some(playerObj => playerObj.id === playerId)
 
@@ -23,7 +18,12 @@ module.exports = (eventObj, queue) => {
       channel.send(`You are already in the queue <@${playerId}>`)
     } else {
       players.push({ id: playerId, username, dmPlayer })
+      playerIdsIndexed[playerId] = true
       channel.send(`You have entered the queue <@${playerId}>`)
+
+      if (players.length === 6) {
+        startVote(eventObj, queue)
+      }
     }
   }
 }
