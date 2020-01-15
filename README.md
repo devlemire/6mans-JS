@@ -16,6 +16,7 @@
 - Run `echo token=TOKEN > .env`
   - Replace TOKEN with the token you copied
 - Run `node index.js`
+- In a Discord server where you have added the bot, type !6m-help to verify the bot is working and to see a list of helpful commands.
 
 # After initial setup - How to run
 
