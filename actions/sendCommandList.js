@@ -18,10 +18,6 @@ module.exports = eventObj => {
           value: 'Display how many people have voted and for which team structure',
         },
         {
-          name: '!6m-votestatus',
-          value: 'Display how many people have voted and for which team structure',
-        },
-        {
           name: '!6m-r',
           value: 'Vote for random team structure during the voting phase',
         },
