@@ -14,8 +14,8 @@
 - Open a cmd prompt and change directory to the directory where you put the code
 - Run `npm i` to install the project dependencies
 - Run `echo $'token=TOKEN\nchannelName=CHANNELNAME' > .env`
-  - Replace TOKEN with the token you copied
-  - Replace CHANNELNAME with the channel name you want the bot to listen on
+  - Replace `TOKEN` with the token you copied
+  - Replace `CHANNELNAME` with the channel name you want the bot to listen on
 - Run `node index.js`
 - In a Discord server where you have added the bot, type `!6m-help` to verify the bot is working and to see a list of helpful commands.
 
