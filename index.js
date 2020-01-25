@@ -6,13 +6,13 @@ const Discord = require('discord.js')
 const { enterQueue, leaveQueue, getQueueStatus, getVoteStatus, submitVote, sendCommandList } = require('./actions')
 
 // Queue Managment
-const { determinePlayerQueue } = require('./utils/managePlayerQueues')
+const { determinePlayerQueue, removeOfflinePlayerFromQueue } = require('./utils/managePlayerQueues')
 
 // Discord Bot
 const bot = new Discord.Client()
 
 // Environment Variables
-const { token, NODE_ENV } = process.env
+const { token, NODE_ENV, channelName } = process.env
 
 bot.on('ready', e => {
   const { username, id } = bot.user
@@ -24,9 +24,13 @@ bot.on('message', eventObj => {
   const type = eventObj.channel.type
   const isCommand = msg.startsWith('!')
 
-  // If this is not a command, we don't give a f**k about what happens
-  // If this is a DM to the bot, we don't give a f**k about what happens
+  // If this is not a command,
+  // If this is a DM to the bot,
+  // If there is a channelName provided in the .env and the channel name doesn't match,
+  // If the user is in invisible mode or offline,
   // See ya l8r virgin
+  if (eventObj.author.presence.status === 'offline') return
+  if (channelName && eventObj.channel.name !== channelName) return
   if (!isCommand) return
   if (NODE_ENV !== 'development' && type === 'dm') return
 
@@ -72,6 +76,13 @@ bot.on('message', eventObj => {
   }
 
   // console.log('Found queue:', queue)
+})
+
+bot.on('presenceUpdate', (oldMember, newMember) => {
+  if (newMember.presence.status === 'offline') {
+    // Remove this player from the Q if they are in one
+    removeOfflinePlayerFromQueue({ playerId: newMember.user.id, playerChannels: newMember.guild.channels })
+  }
 })
 
 bot.on('disconnect', e => {

@@ -3,6 +3,8 @@ const createLobbyInfo = require('./createLobbyInfo')
 
 module.exports = (eventObj, queue) => {
   const { players, teams } = queue
+  queue.votingInProgress = false
+  queue.creatingTeamsInProgress = true
 
   while (teams.blue.players.length !== 3) {
     const randomIndex = randomNumber(players.length - 1)

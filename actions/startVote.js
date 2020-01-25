@@ -3,6 +3,7 @@ const playersToMentions = require('../utils/playersToMentions')
 module.exports = (eventObj, queue) => {
   const { players } = queue
   const channel = eventObj.author.lastMessage.channel
+  queue.votingInProgress = true
 
   channel.send(playersToMentions(players))
 

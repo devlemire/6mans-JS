@@ -8,6 +8,8 @@ const playersToMentions = players => {
 module.exports = async (eventObj, queue) => {
   let { players, teams, lobby } = queue
   const channel = eventObj.author.lastMessage.channel
+  queue.votingInProgress = false
+  queue.creatingTeamsInProgress = true
 
   // Randomly choose Blue Captain
   const blueCaptainIndex = randomNumber(players.length - 1)

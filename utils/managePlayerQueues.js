@@ -6,11 +6,13 @@ function createQueue() {
   return {
     players: [],
     playerIdsIndexed: {},
+    votingInProgress: false,
     votes: {
       r: 0,
       c: 0,
       playersWhoVoted: [],
     },
+    creatingTeamsInProgress: false,
     teams: {
       blue: {
         players: [],
@@ -67,7 +69,40 @@ const deletePlayerQueue = lobbyId => {
   queues.splice(queueIndex, 1)
 }
 
+const removeOfflinePlayerFromQueue = ({ playerId, playerChannels }) => {
+  if (queues.length === 0) return
+
+  const playersQueue = queues.find(queueObj => queueObj.playerIdsIndexed[playerId])
+
+  if (!playersQueue) return
+
+  // The player is in a queue but logged out without leaving the queue
+  playersQueue.players = playersQueue.players.filter(playerObj => playerObj.id !== playerId)
+  delete playersQueue.playerIdsIndexed[playerId]
+
+  const channel = playerChannels.find(channelObj => channelObj.name === process.env.channelName)
+
+  if (playersQueue.players.length === 0) {
+    // No players are in the queue now
+    deletePlayerQueue(playersQueue.lobby.id)
+  } else {
+    // Notify the other players in the queue of the removal
+    channel.send({
+      embed: {
+        color: 2201331,
+        title: `Lobby ${playersQueue.lobby.name}`,
+        description: `<@${playerId}> was removed from the queue because they went offline.`,
+        fields: [
+          { name: 'Players in the queue', value: playersToMentions(playersQueue.players) },
+          { name: 'Voting in progress', value: playersQueue.votingInProgress },
+        ],
+      },
+    })
+  }
+}
+
 module.exports = {
   determinePlayerQueue,
   deletePlayerQueue,
+  removeOfflinePlayerFromQueue,
 }
