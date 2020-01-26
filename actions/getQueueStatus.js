@@ -2,11 +2,13 @@ const playersToMentions = require('../utils/playersToMentions')
 const { commandToString } = require('../utils/commands')
 
 module.exports = (eventObj, queue) => {
-  const { players, lobby, votingInProgress, creatingTeamsInProgress } = queue
+  const { players, lobby, votingInProgress, creatingTeamsInProgress, playerIdsIndexed } = queue
   const channel = eventObj.author.lastMessage.channel
+  const playerId = eventObj.author.id
+  const playerInQueue = playerIdsIndexed[playerId]
 
-  if (players.length === 0) {
-    channel.send(`The queue is currently empty! Type ${commandToString.queue} to join.`)
+  if (players.length === 0 || !playerInQueue) {
+    channel.send(`You have not entered the queue <@${playerId}>. Type ${commandToString.queue} to join!`)
   } else {
     const remainingPlayersRequired = 6 - players.length
 

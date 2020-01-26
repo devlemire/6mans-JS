@@ -37,30 +37,38 @@ let queues = []
 
 const determinePlayerQueue = (playerId, command, channel) => {
   if (queues.length === 0 && command === commandToString.queue) {
+    // They are no existing queues yet, make the first one
     const queue = createQueue()
     queues.push(queue)
 
     return queue
   } else if (queues.length === 0 && command !== commandToString.queue) {
+    // There are no existing queues yet, but player did not try to queue
     return undefined
   }
 
+  // There are existing queues
+  // Attempt to find player's queue
   const playersQueue = queues.find(queueObj => queueObj.playerIdsIndexed[playerId])
 
-  if (playersQueue) {
-    return playersQueue
-  } else {
-    // Player is not in a queue yet
+  // Player is already in a queue
+  if (playersQueue) return playersQueue
+
+  // Player is not in a queue yet
+  if (!playersQueue && command === commandToString.queue) {
     const notFullQueue = queues.find(queueObj => queueObj.players.length < 6)
 
-    if (notFullQueue) {
-      return notFullQueue
-    } else {
-      const queue = createQueue()
-      queues.push(queue)
+    // Player can join an existing queue
+    if (notFullQueue) return notFullQueue
 
-      return queue
-    }
+    // PLayer needs a new queue to be created for them
+    const queue = createQueue()
+    queues.push(queue)
+
+    return queue
+  } else {
+    // Player is not in a queue and did not attempt to queue
+    return undefined
   }
 }
 
@@ -93,7 +101,7 @@ const removeOfflinePlayerFromQueue = ({ playerId, playerChannels }) => {
       channel.send({
         embed: {
           color: 2201331,
-          title: `Lobby ${playersQueue.lobby.name}`,
+          title: `Lobby ${playersQueue.lobby.name} - Player removed`,
           description: `<@${playerId}> was removed from the queue because they went offline.`,
           fields: [
             { name: 'Players in the queue', value: playersToMentions(playersQueue.players) },

@@ -1,15 +1,16 @@
 const createRandomTeams = require('./createRandomTeams')
 const createCaptainTeams = require('./createCaptainTeams')
 const randomNumber = require('../utils/randomNumber')
+const { commandToString } = require('../utils/commands')
 
 module.exports = (eventObj, queue) => {
-  const { players, votes } = queue
+  const { players, votes, playerIdsIndexed } = queue
   const channel = eventObj.author.lastMessage.channel
   const playerId = eventObj.author.id
-  const userIndexInPlayers = players.findIndex(playerObj => playerObj.id === playerId)
+  const playerInQueue = playerIdsIndexed[playerId]
 
-  if (players.length === 0 || userIndexInPlayers === -1) {
-    channel.send(`You cannot vote because you aren't in the queue <@${playerId}>`)
+  if (players.length === 0 || !playerInQueue) {
+    channel.send(`You have not entered the queue <@${playerId}>. Type ${commandToString.queue} to join!`)
   } else {
     const vote = eventObj.content
       .toLowerCase()

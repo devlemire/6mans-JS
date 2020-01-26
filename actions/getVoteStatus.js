@@ -1,12 +1,14 @@
+const { commandToString } = require('../utils/commands')
+
 module.exports = (eventObj, queue) => {
-  const { players, votes, lobby } = queue
+  const { players, votes, lobby, playerIdsIndexed } = queue
   const channel = eventObj.author.lastMessage.channel
   const playerId = eventObj.author.id
-  const userIndexInPlayers = players.findIndex(playerObj => playerObj.id === playerId)
+  const playerInQueue = playerIdsIndexed[playerId]
   const remainingVotesRequired = 6 - (votes.r + votes.c)
 
-  if (players.length === 0 || userIndexInPlayers === -1) {
-    channel.send(`You have not entered the queue <@${playerId}>`)
+  if (players.length === 0 || !playerInQueue) {
+    channel.send(`You have not entered the queue <@${playerId}>. Type ${commandToString.queue} to join!`)
   } else if (players.length < 6) {
     channel.send(`6 players have not been found yet.`)
   } else {

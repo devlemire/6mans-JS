@@ -43,7 +43,7 @@ bot.on('message', eventObj => {
   const queue = determinePlayerQueue(playerId, command, channel)
 
   if (isCommand && !queue && validCommandCheck[command]) {
-    channel.send(`There are currently no active queues. Type ${commandToString.queue} to create the first one!`)
+    channel.send(`You have not entered the queue <@${playerId}>. Type ${commandToString.queue} to join!`)
     return
   }
 
