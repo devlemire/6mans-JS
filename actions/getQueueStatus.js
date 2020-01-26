@@ -8,10 +8,8 @@ module.exports = (eventObj, queue) => {
   const playerId = eventObj.author.id
   const remainingPlayersRequired = 6 - players.length
 
-  if (playerNotInQueue(playerId, queue)) {
-    // Player is not in the queue
-    return channel.send(`You have not entered the queue <@${playerId}>. Type ${commandToString.queue} to join!`)
-  }
+  // Player is not in the queue
+  if (playerNotInQueue({ playerId, channel, queue })) return
 
   // Player is in the queue
   channel.send({
