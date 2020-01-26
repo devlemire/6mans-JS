@@ -61,7 +61,7 @@ const determinePlayerQueue = (playerId, command, channel) => {
     // Player can join an existing queue
     if (notFullQueue) return notFullQueue
 
-    // PLayer needs a new queue to be created for them
+    // Player needs a new queue to be created for them
     const queue = createQueue()
     queues.push(queue)
 
