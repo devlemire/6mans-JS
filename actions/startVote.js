@@ -13,8 +13,8 @@ module.exports = (eventObj, queue) => {
       title: '6 players found',
       description: 'Please vote for your desired team structure.',
       fields: [
-        { name: 'Vote for random teams', value: '!r', inline: true },
-        { name: 'Vote for captains', value: '!c', inline: true },
+        { name: 'Vote for random teams', value: '!6m-r', inline: true },
+        { name: 'Vote for captains', value: '!6m-c', inline: true },
         {
           name: 'Vote Status',
           value: 'You can check the vote status by typing !votestatus',

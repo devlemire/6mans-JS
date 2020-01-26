@@ -31,7 +31,7 @@ module.exports = async (eventObj, queue) => {
       description: 'The vote resulted in captain structure. The following are your captains:',
       fields: [
         { name: 'Captain Blue', value: `<@${teams.blue.captain.id}>` },
-        { name: 'Captain Orange', value: `<@$${teams.orange.captain.id}>` },
+        { name: 'Captain Orange', value: `<@${teams.orange.captain.id}>` },
       ],
     },
   })
