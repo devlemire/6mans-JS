@@ -81,7 +81,7 @@ bot.on('message', eventObj => {
 bot.on('presenceUpdate', (oldMember, newMember) => {
   if (newMember.presence.status === 'offline') {
     // Remove this player from the Q if they are in one
-    removeOfflinePlayerFromQueue({ playerId: newMember.user.id, playerChannels: newMember.guild.channels })
+    removeOfflinePlayerFromQueue({ playerId: newMember.user.id, playerChannels: newMember.client.channels })
   }
 })
 

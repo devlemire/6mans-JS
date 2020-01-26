@@ -1,4 +1,5 @@
 const randomstring = require('randomstring')
+const playersToMentions = require('../utils/playersToMentions')
 
 let lobbyId = 0
 
@@ -87,17 +88,20 @@ const removeOfflinePlayerFromQueue = ({ playerId, playerChannels }) => {
     deletePlayerQueue(playersQueue.lobby.id)
   } else {
     // Notify the other players in the queue of the removal
-    channel.send({
-      embed: {
-        color: 2201331,
-        title: `Lobby ${playersQueue.lobby.name}`,
-        description: `<@${playerId}> was removed from the queue because they went offline.`,
-        fields: [
-          { name: 'Players in the queue', value: playersToMentions(playersQueue.players) },
-          { name: 'Voting in progress', value: playersQueue.votingInProgress },
-        ],
-      },
-    })
+    if (channel) {
+      channel.send({
+        embed: {
+          color: 2201331,
+          title: `Lobby ${playersQueue.lobby.name}`,
+          description: `<@${playerId}> was removed from the queue because they went offline.`,
+          fields: [
+            { name: 'Players in the queue', value: playersToMentions(playersQueue.players) },
+            { name: 'Voting in progress', value: playersQueue.votingInProgress, inline: true },
+            { name: 'Creating teams in progress', value: playersQueue.creatingTeamsInProgress, inline: true },
+          ],
+        },
+      })
+    }
   }
 }
 
