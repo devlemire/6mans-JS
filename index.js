@@ -3,7 +3,15 @@ require('dotenv').config({ path: `${__dirname}/.env` })
 const Discord = require('discord.js')
 
 // Actions
-const { enterQueue, leaveQueue, getQueueStatus, getVoteStatus, submitVote, sendCommandList } = require('./actions')
+const {
+  enterQueue,
+  leaveQueue,
+  getQueueStatus,
+  getVoteStatus,
+  submitVote,
+  sendCommandList,
+  createVoiceChannels,
+} = require('./actions')
 
 // Queue Managment
 const { determinePlayerQueue, removeOfflinePlayerFromQueue } = require('./utils/managePlayerQueues')
@@ -66,6 +74,10 @@ bot.on('message', eventObj => {
       break
     case commandToString.help:
       sendCommandList(eventObj)
+      break
+    case '!6m-cvc':
+      createVoiceChannels(eventObj, queue)
+      break
     default:
       return
   }
