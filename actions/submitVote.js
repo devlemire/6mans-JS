@@ -25,24 +25,24 @@ module.exports = (eventObj, queue) => {
   } else {
     channel.send(`You cannot vote because you already voted <@${playerId}>`)
   }
-}
 
-if (votes.c + votes.r === 6) {
-  if (votes.r > votes.c) {
-    createRandomTeams(eventObj, queue)
-  } else if (votes.c > votes.r) {
-    createCaptainTeams(eventObj, queue)
-  } else {
-    const random = randomNumber(1)
-
-    channel.send(`The voting resulted in a tie. I will choose the team structure at random.`)
-
-    if (random === 0) {
+  if (votes.c + votes.r === 6) {
+    if (votes.r > votes.c) {
       createRandomTeams(eventObj, queue)
-    } else if (random === 1) {
+    } else if (votes.c > votes.r) {
       createCaptainTeams(eventObj, queue)
     } else {
-      channel.send(`The universe just exploded...`)
+      const random = randomNumber(1)
+
+      channel.send(`The voting resulted in a tie. I will choose the team structure at random.`)
+
+      if (random === 0) {
+        createRandomTeams(eventObj, queue)
+      } else if (random === 1) {
+        createCaptainTeams(eventObj, queue)
+      } else {
+        channel.send(`The universe just exploded...`)
+      }
     }
   }
 }
