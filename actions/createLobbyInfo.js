@@ -14,7 +14,7 @@ module.exports = (eventObj, queue) => {
       player.dmPlayer({
         embed: {
           color: 2201331,
-          title: `Lobby #${lobby.id} is ready!`,
+          title: `Lobby ${lobby.name} - Ready`,
           description: 'Please join the correct voice channel based on your team',
           fields: [
             {
@@ -36,7 +36,7 @@ module.exports = (eventObj, queue) => {
       player.dmPlayer({
         embed: {
           color: 2201331,
-          title: `Lobby Details`,
+          title: `Lobby ${lobby.name} - Details`,
           description: 'Use this information to join the private match',
           fields: [
             {

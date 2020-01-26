@@ -27,7 +27,7 @@ module.exports = async (eventObj, queue) => {
   channel.send({
     embed: {
       color: 2201331,
-      title: `Lobby #${lobby.id} - Captain Structure`,
+      title: `Lobby ${lobby.name} - Captain Structure`,
       description: 'The vote resulted in captain structure. The following are your captains:',
       fields: [
         { name: 'Captain Blue', value: `<@${teams.blue.captain.id}>` },

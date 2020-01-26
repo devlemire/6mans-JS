@@ -1,5 +1,5 @@
 module.exports = (eventObj, queue) => {
-  const { players, votes } = queue
+  const { players, votes, lobby } = queue
   const channel = eventObj.author.lastMessage.channel
   const playerId = eventObj.author.id
   const userIndexInPlayers = players.findIndex(playerObj => playerObj.id === playerId)
@@ -13,8 +13,8 @@ module.exports = (eventObj, queue) => {
     channel.send({
       embed: {
         color: 2201331,
-        title: `Vote status - ${remainingVotesRequired} votes remaining`,
-        description: 'The current vote count is:',
+        title: `Lobby ${lobby.name} - Vote status`,
+        description: `${remainingVotesRequired} votes remaining`,
         fields: [
           { name: 'Random Teams', value: votes.r, inline: true },
           { name: 'Captains', value: votes.c, inline: true },

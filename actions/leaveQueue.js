@@ -1,7 +1,7 @@
 const { deletePlayerQueue } = require('../utils/managePlayerQueues')
 
 module.exports = (eventObj, queue) => {
-  const { players, lobby } = queue
+  const { players, lobby, playerIdsIndexed } = queue
   const channel = eventObj.author.lastMessage.channel
   const playerId = eventObj.author.id
   const playerIndexInQueue = players.findIndex(playerObj => playerObj.id === playerId)
@@ -10,6 +10,8 @@ module.exports = (eventObj, queue) => {
     channel.send(`You have not entered the queue <@${playerId}>`)
   } else {
     players.splice(playerIndexInQueue, 1)
+    delete playerIdsIndexed[playerId]
+
     channel.send(`You have left the queue <@${playerId}>`)
 
     if (players.length === 0) {

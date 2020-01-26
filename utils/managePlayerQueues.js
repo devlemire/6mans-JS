@@ -1,5 +1,6 @@
 const randomstring = require('randomstring')
 const playersToMentions = require('../utils/playersToMentions')
+const { commandToString } = require('./commands')
 
 let lobbyId = 0
 
@@ -35,12 +36,12 @@ function createQueue() {
 let queues = []
 
 const determinePlayerQueue = (playerId, command, channel) => {
-  if (queues.length === 0 && command === '!6m-q') {
+  if (queues.length === 0 && command === commandToString.queue) {
     const queue = createQueue()
     queues.push(queue)
 
     return queue
-  } else if (queues.length === 0 && command !== '!6m-q') {
+  } else if (queues.length === 0 && command !== commandToString.queue) {
     return undefined
   }
 

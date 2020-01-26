@@ -8,6 +8,9 @@ const { enterQueue, leaveQueue, getQueueStatus, getVoteStatus, submitVote, sendC
 // Queue Managment
 const { determinePlayerQueue, removeOfflinePlayerFromQueue } = require('./utils/managePlayerQueues')
 
+// Commands
+const { commandToString, validCommandCheck } = require('./utils/commands')
+
 // Discord Bot
 const bot = new Discord.Client()
 
@@ -38,38 +41,30 @@ bot.on('message', eventObj => {
   const command = msg.split(' ')[0]
   const playerId = eventObj.author.id
   const queue = determinePlayerQueue(playerId, command, channel)
-  const validCommands = {
-    '!6m-q': true,
-    '!6m-leave': true,
-    '!6m-status': true,
-    '!6m-votestatus': true,
-    '!6m-r': true,
-    '!6m-c': true,
-  }
 
-  if (isCommand && !queue && validCommands[command]) {
-    channel.send('There are currently no active queues. Type !6m-q to create the first one!')
+  if (isCommand && !queue && validCommandCheck[command]) {
+    channel.send(`There are currently no active queues. Type ${commandToString.queue} to create the first one!`)
     return
   }
 
   switch (command) {
-    case '!6m-q':
+    case commandToString.queue:
       enterQueue(eventObj, queue)
       break
-    case '!6m-leave':
+    case commandToString.leave:
       leaveQueue(eventObj, queue)
       break
-    case '!6m-status':
+    case commandToString.status:
       getQueueStatus(eventObj, queue)
       break
-    case '!6m-votestatus':
+    case commandToString.votestatus:
       getVoteStatus(eventObj, queue)
       break
-    case '!6m-r':
-    case '!6m-c':
+    case commandToString.r:
+    case commandToString.c:
       submitVote(eventObj, queue)
       break
-    case '!6m-help':
+    case commandToString.help:
       sendCommandList(eventObj)
     default:
       return
