@@ -12,7 +12,7 @@ module.exports = (eventObj, queue) => {
   if (playerNotInQueue({ playerId, channel, queue })) return
 
   // The voting phase has not started yet
-  if (!votingInProgress) {
+  if (!votes.votingInProgress) {
     return channel.send(`You cannot vote because the voting phase is not in progress <@${playerId}>`)
   }
 
