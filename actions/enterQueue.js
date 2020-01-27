@@ -12,7 +12,7 @@ module.exports = (eventObj, queue) => {
     playerIdsIndexed[playerId] = true
     channel.send(`You have entered the queue <@${playerId}>`)
   } else {
-    const isInQueue = players.some(playerObj => playerObj.id === playerId)
+    const isInQueue = playerIdsIndexed[playerId]
 
     if (isInQueue) {
       channel.send(`You are already in the queue <@${playerId}>`)
