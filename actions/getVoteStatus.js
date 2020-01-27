@@ -8,11 +8,15 @@ module.exports = (eventObj, queue) => {
   const remainingVotesRequired = 6 - (votes.r + votes.c)
 
   // Get a list of mentions for the players who haven't voted
-  const playersWhoHaventVoted = players.map(playerObj => {
-    if (votes.playersWhoVoted[playerObj.id]) {
-      return `<@${playerObj.id}>`
-    }
-  })
+  const playersWhoHaventVoted = players
+    .map(playerObj => {
+      if (!votes.playersWhoVoted[playerObj.id]) {
+        return `<@${playerObj.id}>`
+      }
+
+      return undefined
+    })
+    .filter(mentionString => mentionString !== undefined)
 
   // Player is not in the queue
   if (playerNotInQueue({ playerId, channel, queue })) return
