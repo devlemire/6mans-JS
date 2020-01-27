@@ -15,5 +15,4 @@ exports.validCommandCheck = {
   '!6m-votestatus': true,
   '!6m-r': true,
   '!6m-c': true,
-  '!6m-cvc': true,
 }

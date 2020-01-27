@@ -27,12 +27,13 @@ module.exports = (oldMember, newMember) => {
     (oldMember.voiceChannelID === blue.voiceChannelID || oldMember.voiceChannelID === orange.voiceChannelID) &&
     (newMember.voiceChannelID !== blue.voiceChannelID || newMember.voiceChannelID !== orange.voiceChannelID)
   ) {
-    if (Object.keys(blue.voiceChannelHistory).length >= 1 && Object.keys(orange.voiceChannelHistory).length >= 1) {
+    // Check that all 3 members have joined the orange and blue voice channels
+    if (Object.keys(blue.voiceChannelHistory).length >= 3 && Object.keys(orange.voiceChannelHistory).length >= 3) {
       const blueVoiceChannel = guild.channels.get(blue.voiceChannelID)
       const orangeVoiceChannel = guild.channels.get(orange.voiceChannelID)
 
       if (blueVoiceChannel.members.size === 0 && orangeVoiceChannel.members.size === 0) {
-        // Delete the voice com channels
+        // Delete the voice channels
         blueVoiceChannel.delete()
         orangeVoiceChannel.delete()
 

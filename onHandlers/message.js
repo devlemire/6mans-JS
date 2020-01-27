@@ -1,13 +1,5 @@
 // Actions
-const {
-  enterQueue,
-  leaveQueue,
-  getQueueStatus,
-  getVoteStatus,
-  submitVote,
-  sendCommandList,
-  createVoiceChannels,
-} = require('../actions')
+const { enterQueue, leaveQueue, getQueueStatus, getVoteStatus, submitVote, sendCommandList } = require('../actions')
 
 // Queue Managment
 const { determinePlayerQueue } = require('../utils/managePlayerQueues')
@@ -63,12 +55,9 @@ module.exports = async eventObj => {
     case commandToString.help:
       sendCommandList(eventObj)
       break
-    case '!6m-cvc':
-      await createVoiceChannels(eventObj, queue)
-      break
     default:
       return
   }
 
-  console.log('Found queue:', queue)
+  // console.log('Found queue:', queue)
 }
