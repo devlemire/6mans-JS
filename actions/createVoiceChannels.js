@@ -52,6 +52,9 @@ module.exports = async (eventObj, queue) => {
       ],
     })
 
+    console.log('blue voice channel is being set to', blueVoiceChannel.id)
+    console.log('orange voice channel is being set to', orangeVoiceChannel.id)
+
     teams.blue.voiceChannelID = blueVoiceChannel.id
     teams.orange.voiceChannelID = orangeVoiceChannel.id
   } else {

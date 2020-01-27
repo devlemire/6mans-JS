@@ -42,7 +42,9 @@ module.exports = async (eventObj, queue) => {
 
   // Direct message the first pick captain
   // First pick gets to select 1 player
-  const message = await teams[firstPick].captain.dmPlayer('Choose ONE player to be on your team by clicking an emoji:\n' + playersToMentions(players))
+  const message = await teams[firstPick].captain.dmPlayer(
+    'Choose ONE player to be on your team by clicking an emoji:\n' + playersToMentions(players)
+  )
   await message.react('0️⃣')
   await message.react('1️⃣')
   await message.react('2️⃣')
@@ -68,7 +70,9 @@ module.exports = async (eventObj, queue) => {
 
     // Direct message the second pick captain
     // Second pick gets to select 2 players
-    const message = await teams[secondPick].captain.dmPlayer('Choose TWO players to be on your team by clicking an emoji:\n' + playersToMentions(players))
+    const message = await teams[secondPick].captain.dmPlayer(
+      'Choose TWO players to be on your team by clicking an emoji:\n' + playersToMentions(players)
+    )
     await message.react('0️⃣')
     await message.react('1️⃣')
     await message.react('2️⃣')
