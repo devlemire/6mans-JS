@@ -12,7 +12,7 @@ function createQueue() {
     votes: {
       r: 0,
       c: 0,
-      playersWhoVoted: [],
+      playersWhoVoted: {},
     },
     creatingTeamsInProgress: false,
     teams: {

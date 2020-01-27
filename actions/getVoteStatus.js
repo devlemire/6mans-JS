@@ -7,6 +7,13 @@ module.exports = (eventObj, queue) => {
   const playerId = eventObj.author.id
   const remainingVotesRequired = 6 - (votes.r + votes.c)
 
+  // Get a list of mentions for the players who haven't voted
+  const playersWhoHaventVoted = players.map(playerObj => {
+    if (votes.playersWhoVoted[playerObj.id]) {
+      return `<@${playerObj.id}>`
+    }
+  })
+
   // Player is not in the queue
   if (playerNotInQueue({ playerId, channel, queue })) return
 
@@ -21,8 +28,9 @@ module.exports = (eventObj, queue) => {
     embed: {
       color: 2201331,
       title: `Lobby ${lobby.name} - Vote status`,
-      description: `${remainingVotesRequired} votes remaining`,
+      description: `${remainingVotesRequired} votes remaining - Needs to vote: `,
       fields: [
+        { name: 'Needs to Vote', value: playersWhoHaventVoted.join(', ') },
         { name: 'Random Teams', value: votes.r, inline: true },
         { name: 'Captains', value: votes.c, inline: true },
       ],

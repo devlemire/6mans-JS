@@ -1,7 +1,6 @@
 const createRandomTeams = require('./createRandomTeams')
 const createCaptainTeams = require('./createCaptainTeams')
 const randomNumber = require('../utils/randomNumber')
-const { commandToString } = require('../utils/commands')
 const playerNotInQueue = require('../utils/playerNotInQueue')
 
 module.exports = (eventObj, queue) => {
@@ -12,6 +11,12 @@ module.exports = (eventObj, queue) => {
   // Player is not in the queue
   if (playerNotInQueue({ playerId, channel, queue })) return
 
+  // The voting phase has not started yet
+  if (!votingInProgress) {
+    return channel.send(`You cannot vote because the voting phase is not in progress <@${playerId}>`)
+  }
+
+  // The voting phase has started
   // Player is in the queue
   const vote = eventObj.content
     .toLowerCase()
@@ -22,6 +27,20 @@ module.exports = (eventObj, queue) => {
   if (!votes.playersWhoVoted[playerId]) {
     votes[vote]++
     votes.playersWhoVoted[playerId] = true
+
+    // Check to see if majority of the votes are for 1 team structure
+    // This saves time of waiting for all 6 voters
+    const numberOfVoters = Object.keys(votes.playersWhoVoted).length
+
+    if (numberOfVoters >= 4 && numberOfVoters < 6) {
+      if (votes.r >= 4) {
+        // Random Structure has the majority
+        createRandomTeams(eventObj, queue)
+      } else if (votes.c >= 4) {
+        // Captain Structure has the majority
+        createCaptainTeams(eventObj, queue)
+      }
+    }
   } else {
     channel.send(`You cannot vote because you already voted <@${playerId}>`)
   }
