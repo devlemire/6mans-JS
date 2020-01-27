@@ -22,6 +22,9 @@ module.exports = (oldMember, newMember) => {
     orange.voiceChannelHistory[newMember.user.id] = true
   }
 
+  console.log('blue voice channel history', blue.voiceChannelHistory)
+  console.log('orange voice channel history', orange.voiceChannelHistory)
+
   // Automatically delete the channels after all players have left their voice channels
   if (
     (oldMember.voiceChannelID === blue.voiceChannelID || oldMember.voiceChannelID === orange.voiceChannelID) &&

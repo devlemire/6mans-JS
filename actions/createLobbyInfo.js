@@ -59,6 +59,7 @@ module.exports = async (eventObj, queue) => {
 
   // Create Voice Channels for each team
   await createVoiceChannels(eventObj, queue)
+  console.log(`createVoiceChannel finished, queue:`, queue)
 
   // DM Blue Team
   sendLobbyInfo(teams.blue.players)
