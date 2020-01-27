@@ -5,6 +5,9 @@ module.exports = async (eventObj, queue) => {
   const parentChannel = guild.channels.find(channelObj => channelObj.name === process.env.channelName)
   const everyoneRole = guild.roles.find(roleObj => roleObj.name === '@everyone')
 
+  console.log('parentChannel', parentChannel)
+  console.log('everyoneRole', everyoneRole)
+
   // REMOVE ME
   teams.blue.players[0] = players[0]
   teams.orange.players[0] = players[0]
