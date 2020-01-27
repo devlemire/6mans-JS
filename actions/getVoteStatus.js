@@ -1,31 +1,31 @@
-const { commandToString } = require('../utils/commands')
 const playerNotInQueue = require('../utils/playerNotInQueue')
 
 module.exports = (eventObj, queue) => {
-  const { players, votes, lobby } = queue
+  const { playerIdsIndexed, votingInProgress, votes, lobby } = queue
   const channel = eventObj.author.lastMessage.channel
   const playerId = eventObj.author.id
   const remainingVotesRequired = 6 - (votes.r + votes.c)
-
-  // Get a list of mentions for the players who haven't voted
-  const playersWhoHaventVoted = players
-    .map(playerObj => {
-      if (!votes.playersWhoVoted[playerObj.id]) {
-        return `<@${playerObj.id}>`
-      }
-
-      return undefined
-    })
-    .filter(mentionString => mentionString !== undefined)
 
   // Player is not in the queue
   if (playerNotInQueue({ playerId, channel, queue })) return
 
   // Player is in the queue
-  if (players.length < 6) {
-    // Voting does not start until 6 players are found
-    return channel.send(`6 players have not been found yet.`)
+  // Voting is not in progress
+  if (!votingInProgress) {
+    return channel.send(`You cannot vote because the voting phase is not in progress <@${playerId}>`)
   }
+
+  // Voting is in progress
+  // Get a list of mentions for the players who haven't voted
+  const playersWhoHaventVoted = Object.keys(playerIdsIndexed)
+    .map(playerId => {
+      if (!votes.playersWhoVoted[playerId]) {
+        return `<@${playerId}>`
+      }
+
+      return undefined
+    })
+    .filter(mentionString => mentionString !== undefined)
 
   // Voting is in progress
   channel.send({

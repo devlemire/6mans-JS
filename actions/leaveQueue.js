@@ -1,9 +1,8 @@
 const { deletePlayerQueue } = require('../utils/managePlayerQueues')
-const { commandToString } = require('../utils/commands')
 const playerNotInQueue = require('../utils/playerNotInQueue')
 
 module.exports = (eventObj, queue) => {
-  const { players, lobby, playerIdsIndexed } = queue
+  const { players, playerIdsIndexed, lobby, playerIdsIndexed } = queue
   const channel = eventObj.author.lastMessage.channel
   const playerId = eventObj.author.id
   const playerIndexInQueue = players.findIndex(playerObj => playerObj.id === playerId)
