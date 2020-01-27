@@ -1,5 +1,6 @@
 const randomNumber = require('../utils/randomNumber')
 const { deletePlayerQueue } = require('../utils/managePlayerQueues')
+const createVoiceChannels = require('./createVoiceChannels')
 
 module.exports = (eventObj, queue) => {
   const { teams, lobby } = queue
@@ -56,6 +57,9 @@ module.exports = (eventObj, queue) => {
     })
   }
 
+  // Create Voice Channels for each team
+  createVoiceChannels(eventObj, queue)
+
   // DM Blue Team
   sendLobbyInfo(teams.blue.players)
   // DM Orange Team
@@ -63,7 +67,4 @@ module.exports = (eventObj, queue) => {
 
   // Inform the channel that everything is ready
   channel.send(readyEmbed)
-
-  // Delete the player queue
-  deletePlayerQueue(lobby.id)
 }

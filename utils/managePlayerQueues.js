@@ -19,10 +19,14 @@ function createQueue() {
       blue: {
         players: [],
         captain: undefined,
+        voiceChannelID: undefined,
+        voiceChannelHistory: {},
       },
       orange: {
         players: [],
         captain: undefined,
+        voiceChannelID: undefined,
+        voiceChannelHistory: {},
       },
     },
     lobby: {
@@ -35,7 +39,7 @@ function createQueue() {
 
 let queues = []
 
-const determinePlayerQueue = (playerId, command, channel) => {
+const determinePlayerQueue = (playerId, command) => {
   if (queues.length === 0 && command === commandToString.queue) {
     // They are no existing queues yet, make the first one
     const queue = createQueue()
