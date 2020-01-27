@@ -13,8 +13,6 @@ module.exports = async (eventObj, queue) => {
   // REMOVE ME
 
   if (guild.available) {
-    channel.send('The guild is available.')
-
     const blueVoiceChannel = await guild.createChannel(`${lobby.name}-blue`, {
       parent: parentChannel.id,
       topic: `${lobby.name} - Team Blue Coms`,
