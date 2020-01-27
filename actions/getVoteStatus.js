@@ -32,7 +32,7 @@ module.exports = (eventObj, queue) => {
     embed: {
       color: 2201331,
       title: `Lobby ${lobby.name} - Vote status`,
-      description: `${remainingVotesRequired} votes remaining - Needs to vote: `,
+      description: `${remainingVotesRequired} votes remaining`,
       fields: [
         { name: 'Needs to Vote', value: playersWhoHaventVoted.join(', ') },
         { name: 'Random Teams', value: votes.r, inline: true },

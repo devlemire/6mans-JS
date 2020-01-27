@@ -59,5 +59,5 @@ module.exports = async eventObj => {
       return
   }
 
-  // console.log('Found queue:', queue)
+  console.log('Found queue:', queue)
 }
