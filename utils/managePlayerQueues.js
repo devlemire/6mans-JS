@@ -29,6 +29,7 @@ function createQueue() {
         voiceChannelHistory: {},
       },
     },
+    readyToJoin: false,
     lobby: {
       id: ++lobbyId,
       name: `smjs${lobbyId}`,

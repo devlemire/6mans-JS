@@ -1,7 +1,7 @@
 const playerNotInQueue = require('../utils/playerNotInQueue')
 
 module.exports = (eventObj, queue) => {
-  const { playerIdsIndexed, votingInProgress, votes, lobby } = queue
+  const { playerIdsIndexed, votingInProgress, creatingTeamsInProgress, readyToJoin, votes, lobby } = queue
   const channel = eventObj.author.lastMessage.channel
   const playerId = eventObj.author.id
   const remainingVotesRequired = 6 - (votes.r + votes.c)
@@ -10,9 +10,12 @@ module.exports = (eventObj, queue) => {
   if (playerNotInQueue({ playerId, channel, queue })) return
 
   // Player is in the queue
-  // Voting is not in progress
   if (!votingInProgress) {
+    // Voting is not in progress
     return channel.send(`You cannot vote because the voting phase is not in progress <@${playerId}>`)
+  } else if (creatingTeamsInProgress || readyToJoin) {
+    // Voting phase has ended
+    return channel.send(`The voting phase has ended <@${playerId}>`)
   }
 
   // Voting is in progress
@@ -27,7 +30,6 @@ module.exports = (eventObj, queue) => {
     })
     .filter(mentionString => mentionString !== undefined)
 
-  // Voting is in progress
   channel.send({
     embed: {
       color: 2201331,

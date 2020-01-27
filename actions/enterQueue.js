@@ -7,23 +7,22 @@ module.exports = (eventObj, queue) => {
   const username = eventObj.author.username
   const dmPlayer = async msg => await eventObj.author.send(msg)
 
-  if (players.length === 0) {
-    players.push({ id: playerId, username, dmPlayer })
-    playerIdsIndexed[playerId] = true
-    channel.send(`You have entered the queue <@${playerId}>`)
-  } else {
-    const isInQueue = playerIdsIndexed[playerId]
+  // Check to see if the player is already in the queue
+  const isInQueue = playerIdsIndexed[playerId]
 
-    if (isInQueue) {
-      channel.send(`You are already in the queue <@${playerId}>`)
-    } else {
-      players.push({ id: playerId, username, dmPlayer })
-      playerIdsIndexed[playerId] = true
-      channel.send(`You have entered the queue <@${playerId}>`)
+  // The player is already in the queue
+  if (isInQueue) return channel.send(`You are already in the queue <@${playerId}>`)
 
-      if (players.length === 6) {
-        startVote(eventObj, queue)
-      }
-    }
+  // The player is not in the queue
+  players.push({ id: playerId, username, dmPlayer })
+  playerIdsIndexed[playerId] = true
+
+  // Notify the player that they have joined the queue
+  channel.send(`You have entered the queue <@${playerId}>`)
+
+  // Check to see if 6 players have queued now
+  if (Object.keys(playerIdsIndexed).length === 6) {
+    // 6 players queued, start the voting phase
+    startVote(eventObj, queue)
   }
 }

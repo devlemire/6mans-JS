@@ -1,12 +1,8 @@
 const playerNotInQueue = require('../utils/playerNotInQueue')
-
-const playerIdsIndexedToMentions = playerIdsIndexed =>
-  Object.keys(playerIdsIndexed)
-    .map(playerId => `<@${playerId}>`)
-    .join(', ')
+const playerIdsIndexedToMentions = require('../utils/playerIdsIndexedToMentions')
 
 module.exports = (eventObj, queue) => {
-  const { players, playerIdsIndexed, lobby, votingInProgress, creatingTeamsInProgress } = queue
+  const { players, playerIdsIndexed, lobby, votingInProgress, creatingTeamsInProgress, readyToJoin } = queue
   const channel = eventObj.author.lastMessage.channel
   const playerId = eventObj.author.id
   const remainingPlayersRequired = 6 - players.length
@@ -22,8 +18,9 @@ module.exports = (eventObj, queue) => {
       description: `${remainingPlayersRequired} players needed`,
       fields: [
         { name: 'Players in the queue', value: playerIdsIndexedToMentions(playerIdsIndexed) },
-        { name: 'Voting in progress', value: votingInProgress, inline: true },
-        { name: 'Creating teams in progress', value: creatingTeamsInProgress, inline: true },
+        { name: 'Voting', value: votingInProgress, inline: true },
+        { name: 'Creating Teams', value: creatingTeamsInProgress, inline: true },
+        { name: 'Lobby Ready', value: readyToJoin, inline: true },
       ],
     },
   })

@@ -1,9 +1,9 @@
 const { commandToString } = require('./commands')
 
 module.exports = ({ playerId, channel, queue }) => {
-  const { players, playerIdsIndexed } = queue
+  const { playerIdsIndexed } = queue
 
-  if (players.length === 0 || !playerIdsIndexed[playerId]) {
+  if (!playerIdsIndexed[playerId]) {
     if (channel) {
       channel.send(`You have not entered the queue <@${playerId}>. Type ${commandToString.queue} to join!`)
     }

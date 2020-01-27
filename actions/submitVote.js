@@ -4,7 +4,7 @@ const randomNumber = require('../utils/randomNumber')
 const playerNotInQueue = require('../utils/playerNotInQueue')
 
 module.exports = (eventObj, queue) => {
-  const { votes } = queue
+  const { votes, votingInProgress } = queue
   const channel = eventObj.author.lastMessage.channel
   const playerId = eventObj.author.id
 
@@ -12,7 +12,7 @@ module.exports = (eventObj, queue) => {
   if (playerNotInQueue({ playerId, channel, queue })) return
 
   // The voting phase has not started yet
-  if (!queue.votingInProgress) {
+  if (!votingInProgress) {
     return channel.send(`You cannot vote because the voting phase is not in progress <@${playerId}>`)
   }
 

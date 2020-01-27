@@ -1,5 +1,4 @@
 const randomNumber = require('../utils/randomNumber')
-const { deletePlayerQueue } = require('../utils/managePlayerQueues')
 const createVoiceChannels = require('./createVoiceChannels')
 
 module.exports = async (eventObj, queue) => {
@@ -68,4 +67,9 @@ module.exports = async (eventObj, queue) => {
 
   // Inform the channel that everything is ready
   channel.send(readyEmbed)
+
+  // Set the ready to go flag to true
+  queue.votingInProgress = false
+  queue.creatingTeamsInProgress = false
+  queue.readyToJoin = true
 }

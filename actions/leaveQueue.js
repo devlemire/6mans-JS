@@ -2,7 +2,7 @@ const { deletePlayerQueue } = require('../utils/managePlayerQueues')
 const playerNotInQueue = require('../utils/playerNotInQueue')
 
 module.exports = (eventObj, queue) => {
-  const { players, playerIdsIndexed, lobby } = queue
+  let { players, playerIdsIndexed, lobby } = queue
   const channel = eventObj.author.lastMessage.channel
   const playerId = eventObj.author.id
   const playerIndexInQueue = players.findIndex(playerObj => playerObj.id === playerId)
@@ -16,7 +16,7 @@ module.exports = (eventObj, queue) => {
 
   channel.send(`You have left the queue <@${playerId}>`)
 
-  if (players.length === 0) {
+  if (Object.keys(playerIdsIndexed).length === 0) {
     deletePlayerQueue(lobby.id)
   }
 }
