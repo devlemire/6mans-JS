@@ -1,12 +1,12 @@
-const playersToMentions = require('../utils/playersToMentions')
+const playerIdsIndexedToMentions = require('../utils/playerIdsIndexedToMentions')
 const { commandToString } = require('../utils/commands')
 
 module.exports = (eventObj, queue) => {
-  const { players, lobby } = queue
+  const { playerIdsIndexed, lobby } = queue
   const channel = eventObj.author.lastMessage.channel
   queue.votingInProgress = true
 
-  channel.send(playersToMentions(players))
+  channel.send(playerIdsIndexedToMentions(playerIdsIndexed))
 
   channel.send({
     embed: {

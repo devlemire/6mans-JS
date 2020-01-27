@@ -25,6 +25,7 @@ module.exports = (eventObj, queue) => {
     .split('-')[1]
 
   if (!votes.playersWhoVoted[playerId]) {
+    // The player has not voted yet
     votes[vote]++
     votes.playersWhoVoted[playerId] = true
 
@@ -42,9 +43,11 @@ module.exports = (eventObj, queue) => {
       }
     }
   } else {
+    // The player has already voted
     channel.send(`You cannot vote because you already voted <@${playerId}>`)
   }
 
+  // Check to see if all 6 votes have been set and then determine the team structure
   if (votes.c + votes.r === 6) {
     if (votes.r > votes.c) {
       createRandomTeams(eventObj, queue)
