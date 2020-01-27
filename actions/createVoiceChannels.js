@@ -1,5 +1,5 @@
 module.exports = async (eventObj, queue) => {
-  const { players, lobby, teams } = queue
+  const { lobby, teams } = queue
   const channel = eventObj.author.lastMessage.channel
   const guild = eventObj.guild
   const parentChannel = guild.channels.find(
@@ -7,10 +7,11 @@ module.exports = async (eventObj, queue) => {
   )
   const everyoneRole = guild.roles.find(roleObj => roleObj.name === '@everyone')
 
-  // REMOVE ME
-  teams.blue.players[0] = players[0]
-  teams.orange.players[0] = players[0]
-  // REMOVE ME
+  console.log('categoryName', process.env.categoryName)
+  console.log('parentChannel', parentChannel.id)
+  console.log('everyoneRole', everyoneRole.id)
+  console.log('blue team players', teams.blue.players)
+  console.log('orange team players', teams.orange.players)
 
   if (guild.available) {
     const blueVoiceChannel = await guild.createChannel(`${lobby.name}-blue`, {

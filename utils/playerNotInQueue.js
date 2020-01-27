@@ -1,3 +1,5 @@
+const { commandToString } = require('./commands')
+
 module.exports = ({ playerId, channel, queue }) => {
   const { players, playerIdsIndexed } = queue
 
