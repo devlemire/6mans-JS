@@ -4,7 +4,6 @@ module.exports = (eventObj, queue) => {
   const { playerIdsIndexed, votingInProgress, creatingTeamsInProgress, readyToJoin, votes, lobby } = queue
   const channel = eventObj.author.lastMessage.channel
   const playerId = eventObj.author.id
-  const remainingVotesRequired = 6 - (votes.r + votes.c)
 
   // Player is not in the queue
   if (playerNotInQueue({ playerId, channel, queue })) return
@@ -16,23 +15,26 @@ module.exports = (eventObj, queue) => {
   }
 
   // Voting has started already
-  // Get a list of mentions for the players who haven't voted
-  let playersWhoHaventVoted = Object.keys(playerIdsIndexed)
-    .map(playerId => {
-      if (!votes.playersWhoVoted[playerId]) {
-        return `<@${playerId}>`
-      }
+  let remainingVotesRequired = 6 - (votes.r + votes.c)
+  let playersWhoHaventVoted
 
-      return undefined
-    })
-    .filter(mentionString => mentionString !== undefined)
-
-  if (playersWhoHaventVoted.length > 0) {
-    // Display the players who need to vote
-    playersWhoHaventVoted.join(', ')
-  } else {
-    // Display blank - No player needs to vote
+  if (!votingInProgress) {
+    // The voting phase has already passed
     playersWhoHaventVoted = ''
+    remainingVotesRequired = 0
+  } else {
+    // The voting phase is currently in progress
+    // Get a list of mentions for the players who haven't voted
+    playersWhoHaventVoted = Object.keys(playerIdsIndexed)
+      .map(playerId => {
+        if (!votes.playersWhoVoted[playerId]) {
+          return `<@${playerId}>`
+        }
+
+        return undefined
+      })
+      .filter(mentionString => mentionString !== undefined)
+      .join(',')
   }
 
   channel.send({
