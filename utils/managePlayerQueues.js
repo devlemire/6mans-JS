@@ -1,5 +1,5 @@
 const randomstring = require('randomstring')
-const playersToMentions = require('../utils/playersToMentions')
+const playerIdsIndexedToMentions = require('../utils/playerIdsIndexedToMentions')
 const { commandToString } = require('./commands')
 
 let lobbyId = 0
@@ -61,7 +61,7 @@ const determinePlayerQueue = (playerId, command) => {
 
   // Player is not in a queue yet
   if (!playersQueue && command === commandToString.queue) {
-    const notFullQueue = queues.find(queueObj => queueObj.players.length < 6)
+    const notFullQueue = queues.find(queueObj => Object.keys(queueObj.playerIdsIndexed).length < 6)
 
     // Player can join an existing queue
     if (notFullQueue) return notFullQueue
@@ -97,7 +97,7 @@ const removeOfflinePlayerFromQueue = ({ playerId, playerChannels }) => {
 
   const channel = playerChannels.find(channelObj => channelObj.name === process.env.channelName)
 
-  if (playersQueue.players.length === 0) {
+  if (Object.keys(playersQueue.playerIdsIndexed).length === 0) {
     // No players are in the queue now
     deletePlayerQueue(playersQueue.lobby.id)
   } else {
@@ -109,9 +109,10 @@ const removeOfflinePlayerFromQueue = ({ playerId, playerChannels }) => {
           title: `Lobby ${playersQueue.lobby.name} - Player removed`,
           description: `<@${playerId}> was removed from the queue because they went offline.`,
           fields: [
-            { name: 'Players in the queue', value: playersToMentions(playersQueue.players) },
+            { name: 'Players in the queue', value: playerIdsIndexedToMentions(playersQueue.playerIdsIndexed) },
             { name: 'Voting in progress', value: playersQueue.votingInProgress, inline: true },
             { name: 'Creating teams in progress', value: playersQueue.creatingTeamsInProgress, inline: true },
+            { name: 'Lobby Ready', value: playersQueue.readyToJoin, inline: true },
           ],
         },
       })

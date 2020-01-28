@@ -37,16 +37,21 @@ module.exports = (eventObj, queue) => {
       .join(',')
   }
 
+  let fields = [
+    { name: 'Random Teams', value: votes.r, inline: true },
+    { name: 'Captains', value: votes.c, inline: true },
+  ]
+
+  if (playersWhoHaventVoted) {
+    fields.unshift({ name: 'Needs to Vote', value: playersWhoHaventVoted })
+  }
+
   channel.send({
     embed: {
       color: 2201331,
       title: `Lobby ${lobby.name} - Vote status`,
       description: `${remainingVotesRequired} votes remaining`,
-      fields: [
-        { name: 'Needs to Vote', value: playersWhoHaventVoted },
-        { name: 'Random Teams', value: votes.r, inline: true },
-        { name: 'Captains', value: votes.c, inline: true },
-      ],
+      fields,
     },
   })
 }
