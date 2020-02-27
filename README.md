@@ -14,7 +14,9 @@
 - Open a cmd prompt and change directory (the terminal command is `cd`) to the directory where you put the code
 - Run `npm i` to install the project dependencies
 - Open a text editor on your computer (ex; Notepad)
-  - Create a new text file in the folder you unzipped earlier called: `.env` (make sure you don't save this as .txt)
+  - Create a new file in the folder you unzipped earlier called: `.env` (make sure you don't save this as `.txt`)
+    - `.env` will work
+    - `.env.txt` will not work
   - Make the contents of your note file look like the following:
     - ```js
       token=YOUR_TOKEN
