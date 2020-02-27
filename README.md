@@ -11,10 +11,16 @@
 
 - Select your server you want the 6mans bot to run on
 - Go back to your discord application and then the bot tab, and this time copy the bot token
-- Open a cmd prompt and change directory to the directory where you put the code
+- Open a cmd prompt and change directory (the terminal command is `cd`) to the directory where you put the code
 - Run `npm i` to install the project dependencies
-- Run `echo $'token=TOKEN\nchannelName=CHANNELNAME' > .env`
-  - Replace `TOKEN` with the token you copied
+- Open a text editor on your computer (ex; Notepad)
+  - Create a new text file in the folder you unzipped earlier called: `.env` (make sure you don't save this as .txt)
+  - Make the contents of your note file look like the following:
+    - ```js
+      token=YOUR_TOKEN
+      channelName=CHANNEL_NAME
+      ```
+  - Replace `YOUR_TOKEN` with the bot token you copied from earlier
   - Replace `CHANNELNAME` with the channel name you want the bot to listen on
 - Run `node index.js`
 - In a Discord server where you have added the bot, type `!6m-help` to verify the bot is working and to see a list of helpful commands.
