@@ -37,6 +37,10 @@ bot.on('disconnect', e => {
   console.log('Bot disconnected:', e)
 })
 
-bot.login(token)
+try {
+  bot.login(token)
+} catch (err) {
+  console.error('The bot failed to login:', err)
+}
 
 module.exports = bot
