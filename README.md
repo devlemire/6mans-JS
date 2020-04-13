@@ -8,9 +8,11 @@
 - Copy the `Client ID` of your new app and go to: https://discordapp.com/oauth2/authorize?&client_id=CLIENTID&scope=bot&permissions=8
 
   - Replace CLIENTID with the Client ID you copied
+  - <b>Never share your client id with any one</b>
 
 - Select your server you want the 6mans bot to run on
 - Go back to your discord application and then the bot tab, and this time copy the bot token
+  - <b>Never share your bot token with any one</b>
 - Open a cmd prompt and change directory (the terminal command is `cd`) to the directory where you put the code
 - Run `npm i` to install the project dependencies
 - Open a text editor on your computer (ex; Notepad)
