@@ -23,6 +23,7 @@
     - ```js
       token=YOUR_TOKEN
       channelName=CHANNEL_NAME
+      debugLogs=true
       ```
   - Replace `YOUR_TOKEN` with the bot token you copied from earlier
   - Replace `CHANNELNAME` with the channel name you want the bot to listen on
