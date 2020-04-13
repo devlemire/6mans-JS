@@ -37,6 +37,9 @@ module.exports = async (eventObj, botUser = { id: undefined }) => {
   if (NODE_ENV !== 'development' && type === 'dm' && commonLogCheck) {
     return console.log('The user is direct messaging the bot, disregarding message')
   }
+  
+  // Dont execute any logic on bot messages
+  if (authorId === botUser.id) return
 
   const channel = eventObj.author.lastMessage.channel
   const command = msg.split(' ')[0]
