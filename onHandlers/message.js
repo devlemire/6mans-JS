@@ -8,22 +8,35 @@ const { determinePlayerQueue } = require('../utils/managePlayerQueues')
 const { commandToString, validCommandCheck } = require('../utils/commands')
 
 // Environment Variables
-const { NODE_ENV, channelName } = process.env
+const { NODE_ENV, channelName, debugLogs } = process.env
 
-module.exports = async eventObj => {
+module.exports = async (eventObj, botUser = { id: undefined }) => {
   const msg = eventObj.content.trim().toLowerCase()
   const type = eventObj.channel.type
   const isCommand = msg.startsWith('!')
+  const authorId = eventObj.author.id
+  const commonLogCheck = debugLogs === 'true' && authorId !== botUser.id
 
   // If this is not a command,
   // If this is a DM to the bot,
   // If there is a channelName provided in the .env and the channel name doesn't match,
   // If the user is in invisible mode or offline,
   // See ya l8r virgin
-  if (eventObj.author.presence.status === 'offline') return
-  if (channelName && eventObj.channel.name !== channelName) return
-  if (!isCommand) return
-  if (NODE_ENV !== 'development' && type === 'dm') return
+  if (eventObj.author.presence.status === 'offline' && commonLogCheck) {
+    return console.log('The user is offline, disregarding message')
+  }
+
+  if (channelName && eventObj.channel.name !== channelName && commonLogCheck) {
+    return console.log('The user is typing on a different channel, disregarding message')
+  }
+
+  if (!isCommand && commonLogCheck) {
+    return console.log('The user is not typing a 6mans command, disregarding message')
+  }
+
+  if (NODE_ENV !== 'development' && type === 'dm' && commonLogCheck) {
+    return console.log('The user is direct messaging the bot, disregarding message')
+  }
 
   const channel = eventObj.author.lastMessage.channel
   const command = msg.split(' ')[0]
@@ -59,5 +72,7 @@ module.exports = async eventObj => {
       return
   }
 
-  console.log('Found queue:', queue)
+  if (queue) {
+    console.log('Found queue:', queue)
+  }
 }

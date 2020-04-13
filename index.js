@@ -10,17 +10,24 @@ const { voiceStateUpdateHandler, messageHandler } = require('./onHandlers')
 
 // Discord Bot
 const bot = new Discord.Client()
+// Bot User Info
+let botUser = {}
 
 // Environment Variables
-const { token } = process.env
+const { token, channelName } = process.env
 
 bot.on('ready', e => {
   const { username, id } = bot.user
+
+  botUser.username = username
+  botUser.id = id
+
   console.log(`Logged in as: ${username} - ${id}`)
+  console.log(`I will be listening for messaged on your text-channel: ${channelName}`)
 })
 
 // Handle 6man commands when a user sends the message
-bot.on('message', messageHandler)
+bot.on('message', eventObj => messageHandler(eventObj, botUser))
 
 // Remove players from the queue if they go offline
 bot.on('presenceUpdate', (oldMember, newMember) => {
