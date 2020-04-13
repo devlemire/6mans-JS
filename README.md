@@ -1,7 +1,8 @@
 # How to setup
 
 - Install node for Windows: https://nodejs.org/en/download/current/
-- Download the latest zip code from the 'releases' tab on this GitHub repository: https://github.com/devlemire/6mans-JS/releases
+- Download the latest zip code from the 'releases' tab on this GitHub repository
+  - https://github.com/devlemire/6mans-JS/releases
 - Unzip the code to a directory
 - Create a discord application at: https://discordapp.com/developers/applications
 - Create a new bot for your new discord application
