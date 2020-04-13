@@ -23,7 +23,7 @@ bot.on('ready', e => {
   botUser.id = id
 
   console.log(`Logged in as: ${username} - ${id}`)
-  console.log(`I will be listening for messaged on your text-channel: ${channelName}`)
+  console.log(`I will be listening for messages on your text-channel: ${channelName}`)
 })
 
 // Handle 6man commands when a user sends the message
