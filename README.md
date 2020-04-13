@@ -19,7 +19,7 @@
   - Create a new file in the folder you unzipped earlier called: `.env` (make sure you don't save this as `.txt`)
     - `.env` will work
     - `.env.txt` will not work
-  - Make the contents of your note file look like the following:
+  - Make the contents of your file look like the following:
     - ```js
       token=YOUR_TOKEN
       categoryName=CATEGORY_NAME
