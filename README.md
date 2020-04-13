@@ -22,11 +22,13 @@
   - Make the contents of your note file look like the following:
     - ```js
       token=YOUR_TOKEN
+      categoryName=CATEGORY_NAME
       channelName=CHANNEL_NAME
       debugLogs=true
       ```
   - Replace `YOUR_TOKEN` with the bot token you copied from earlier
-  - Replace `CHANNELNAME` with the channel name you want the bot to listen on
+  - Replace `CHANNEL_NAME` with the channel name you want the bot to listen on
+  - Replace `CATEGORY_NAME` with the category name you want the bot to create voice channels under
 - Go back to your command prompt, make sure you are in the directory of the folder you unzipped earlier, and run `node index.js`
 - In a Discord server where you have added the bot, type `!6m-help` to verify the bot is working and to see a list of helpful commands.
 
@@ -39,4 +41,3 @@
 # Common Gotchas as of v1.9.2
 
 - You <b>must</b> be online when interacting with the 6mans bot
-- The `channelName` env variable is also used to specify the discord `category`. For example, if you set your `channelName` to `6mans` you need to make a category named `6mans` with a text-channel in it named `6mans`. The `category` is necessary so the bot can make voice channels under it. 
