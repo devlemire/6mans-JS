@@ -35,3 +35,8 @@
 - Open cmd
 - Change directories to where you put the bot
 - Run `node index.js`
+
+# Common Gotchas as of v1.9.2
+
+- You <b>must</b> be online when interacting with the 6mans bot
+- The `channelName` env variable is also used to specify the discord `category`. For example, if you set your `channelName` to `6mans` you need to make a category named `6mans` with a text-channel in it named `6mans`. The `category` is necessary so the bot can make voice channels under it. 
