@@ -48,6 +48,7 @@ Go back to your discord application and then the bot tab and finally copy the bo
 - Go back to your command prompt, make sure you are in the directory of the folder you unzipped earlier, and run `node index.js`
 - In a Discord server where you have added the bot, type `!6m-help` to verify the bot is working and to see a list of helpful commands.
   - Make sure you type the command in the channel that matches your `channelName` env variable
+  - Make sure you are appearing online in Discord
 
 # After initial setup - How to run
 
