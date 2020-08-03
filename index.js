@@ -10,13 +10,21 @@ const { voiceStateUpdateHandler, messageHandler } = require('./onHandlers')
 
 // Discord Bot
 const bot = new Discord.Client()
+// Bot User Info
+let botUser = {}
 
 // Environment Variables
-const { token } = process.env
+const { token, channelName } = process.env
 
 bot.on('ready', (e) => {
   const { username, id } = bot.user
+
+  botUser.username = username
+  botUser.id = id
+
   console.log(`Logged in as: ${username} - ${id}`)
+  console.log(`I will be listening for messages on your text-channel: ${channelName}`)
+
   console.log('****** (safe) process.env variables ******')
   console.log('channelName:', process.env.channelName)
   console.log('categoryName:', process.env.categoryName)
@@ -25,7 +33,7 @@ bot.on('ready', (e) => {
 })
 
 // Handle 6man commands when a user sends the message
-bot.on('message', messageHandler)
+bot.on('message', (eventObj) => messageHandler(eventObj, botUser))
 
 // Remove players from the queue if they go offline
 bot.on('presenceUpdate', (oldMember, newMember) => {
@@ -42,6 +50,13 @@ bot.on('disconnect', (e) => {
   console.log('Bot disconnected:', e)
 })
 
-bot.login(token)
+async function login() {
+  try {
+    await bot.login(token)
+  } catch (err) {
+    console.error('The bot failed to login:', err)
+  }
+}
 
+login()
 module.exports = bot
