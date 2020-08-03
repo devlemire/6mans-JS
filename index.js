@@ -14,9 +14,14 @@ const bot = new Discord.Client()
 // Environment Variables
 const { token } = process.env
 
-bot.on('ready', e => {
+bot.on('ready', (e) => {
   const { username, id } = bot.user
   console.log(`Logged in as: ${username} - ${id}`)
+  console.log('****** (safe) process.env variables ******')
+  console.log('channelName:', process.env.channelName)
+  console.log('categoryName:', process.env.categoryName)
+  console.log('NODE_ENV:', process.env.NODE_ENV)
+  console.log('****** process.env variables ******')
 })
 
 // Handle 6man commands when a user sends the message
@@ -33,7 +38,7 @@ bot.on('presenceUpdate', (oldMember, newMember) => {
 // Delete team voice channels and queues
 bot.on('voiceStateUpdate', voiceStateUpdateHandler)
 
-bot.on('disconnect', e => {
+bot.on('disconnect', (e) => {
   console.log('Bot disconnected:', e)
 })
 
