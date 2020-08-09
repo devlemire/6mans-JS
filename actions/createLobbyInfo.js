@@ -1,5 +1,6 @@
 const randomNumber = require('../utils/randomNumber')
 const createVoiceChannels = require('./createVoiceChannels')
+const { lobbyRegion, lobbySeries } = process.env
 
 module.exports = async (eventObj, queue) => {
   const { teams, lobby } = queue
@@ -18,11 +19,11 @@ module.exports = async (eventObj, queue) => {
       fields: [
         {
           name: 'Blue',
-          value: teams.blue.players.map(playerObj => `<@${playerObj.id}>`).join(', '),
+          value: teams.blue.players.map((playerObj) => `<@${playerObj.id}>`).join(', '),
         },
         {
           name: 'Orange',
-          value: teams.orange.players.map(playerObj => `<@${playerObj.id}>`).join(', '),
+          value: teams.orange.players.map((playerObj) => `<@${playerObj.id}>`).join(', '),
         },
         {
           name: 'Creates the lobby',
@@ -33,7 +34,7 @@ module.exports = async (eventObj, queue) => {
   }
 
   function sendLobbyInfo(players) {
-    players.forEach(player => {
+    players.forEach((player) => {
       player.dmPlayer(readyEmbed)
 
       player.dmPlayer({
@@ -49,6 +50,14 @@ module.exports = async (eventObj, queue) => {
             {
               name: 'Lobby Password',
               value: lobby.password,
+            },
+            {
+              name: 'Series Length (mutator)',
+              value: lobbySeries,
+            },
+            {
+              name: 'Region',
+              value: lobbyRegion,
             },
           ],
         },

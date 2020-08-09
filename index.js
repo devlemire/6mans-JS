@@ -29,6 +29,9 @@ bot.on('ready', (e) => {
   console.log('channelName:', process.env.channelName)
   console.log('categoryName:', process.env.categoryName)
   console.log('NODE_ENV:', process.env.NODE_ENV)
+  console.log('lobbySeries', process.env.lobbySeries)
+  console.log('lobbyRegion', process.env.lobbyRegion)
+  console.log('lobbyName', process.env.lobbyName)
   console.log('****** process.env variables ******')
 })
 

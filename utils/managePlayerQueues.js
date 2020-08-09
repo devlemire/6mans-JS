@@ -1,6 +1,7 @@
 const randomstring = require('randomstring')
 const playerIdsIndexedToMentions = require('../utils/playerIdsIndexedToMentions')
 const { commandToString } = require('./commands')
+const { lobbyName } = process.env
 
 let lobbyId = 0
 
@@ -32,7 +33,7 @@ function createQueue() {
     readyToJoin: false,
     lobby: {
       id: ++lobbyId,
-      name: `smjs${lobbyId}`,
+      name: `${lobbyName}${lobbyId}`,
       password: randomstring.generate({ length: 3 }).toLowerCase(),
     },
   }
@@ -54,14 +55,14 @@ const determinePlayerQueue = (playerId, command) => {
 
   // There are existing queues
   // Attempt to find player's queue
-  const playersQueue = queues.find(queueObj => queueObj.playerIdsIndexed[playerId])
+  const playersQueue = queues.find((queueObj) => queueObj.playerIdsIndexed[playerId])
 
   // Player is already in a queue
   if (playersQueue) return playersQueue
 
   // Player is not in a queue yet
   if (!playersQueue && command === commandToString.queue) {
-    const notFullQueue = queues.find(queueObj => Object.keys(queueObj.playerIdsIndexed).length < 6)
+    const notFullQueue = queues.find((queueObj) => Object.keys(queueObj.playerIdsIndexed).length < 6)
 
     // Player can join an existing queue
     if (notFullQueue) return notFullQueue
@@ -77,25 +78,25 @@ const determinePlayerQueue = (playerId, command) => {
   }
 }
 
-const deletePlayerQueue = lobbyId => {
+const deletePlayerQueue = (lobbyId) => {
   if (typeof lobbyId !== 'number') return
 
-  const queueIndex = queues.findIndex(queueObj => queueObj.lobby.id === lobbyId)
+  const queueIndex = queues.findIndex((queueObj) => queueObj.lobby.id === lobbyId)
   queues.splice(queueIndex, 1)
 }
 
 const removeOfflinePlayerFromQueue = ({ playerId, playerChannels }) => {
   if (queues.length === 0) return
 
-  const playersQueue = queues.find(queueObj => queueObj.playerIdsIndexed[playerId])
+  const playersQueue = queues.find((queueObj) => queueObj.playerIdsIndexed[playerId])
 
   if (!playersQueue) return
 
   // The player is in a queue but logged out without leaving the queue
-  playersQueue.players = playersQueue.players.filter(playerObj => playerObj.id !== playerId)
+  playersQueue.players = playersQueue.players.filter((playerObj) => playerObj.id !== playerId)
   delete playersQueue.playerIdsIndexed[playerId]
 
-  const channel = playerChannels.find(channelObj => channelObj.name === process.env.channelName)
+  const channel = playerChannels.find((channelObj) => channelObj.name === process.env.channelName)
 
   if (Object.keys(playersQueue.playerIdsIndexed).length === 0) {
     // No players are in the queue now
