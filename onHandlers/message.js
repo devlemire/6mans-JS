@@ -1,5 +1,13 @@
 // Actions
-const { enterQueue, leaveQueue, getQueueStatus, getVoteStatus, submitVote, sendCommandList } = require('../actions')
+const {
+  enterQueue,
+  leaveQueue,
+  getQueueStatus,
+  getVoteStatus,
+  submitVote,
+  sendCommandList,
+  kickPlayer,
+} = require('../actions')
 
 // Queue Managment
 const { determinePlayerQueue } = require('../utils/managePlayerQueues')
@@ -22,22 +30,38 @@ module.exports = async (eventObj, botUser = { id: undefined }) => {
   // If there is a channelName provided in the .env and the channel name doesn't match,
   // If the user is in invisible mode or offline,
   // See ya l8r virgin
-  if (eventObj.author.presence.status === 'offline' && commonLogCheck) {
-    return console.log('The user is offline, disregarding message')
+  if (eventObj.author.presence.status === 'offline') {
+    if (commonLogCheck) {
+      console.log('The user is offline, disregarding message')
+    }
+
+    return
   }
 
-  if (channelName && eventObj.channel.name !== channelName && commonLogCheck) {
-    return console.log('The user is typing on a different channel, disregarding message')
+  if (channelName && eventObj.channel.name !== channelName) {
+    if (commonLogCheck) {
+      console.log('The user is typing on a different channel, disregarding message')
+    }
+
+    return
   }
 
-  if (!isCommand && commonLogCheck) {
-    return console.log('The user is not typing a 6mans command, disregarding message')
+  if (!isCommand) {
+    if (commonLogCheck) {
+      console.log('The user is not typing a 6mans command, disregarding message')
+    }
+
+    return
   }
 
-  if (NODE_ENV !== 'development' && type === 'dm' && commonLogCheck) {
-    return console.log('The user is direct messaging the bot, disregarding message')
+  if (NODE_ENV !== 'development' && type === 'dm') {
+    if (commonLogCheck) {
+      console.log('The user is direct messaging the bot, disregarding message')
+    }
+
+    return
   }
-  
+
   // Dont execute any logic on bot messages
   if (authorId === botUser.id) return
 
@@ -70,6 +94,9 @@ module.exports = async (eventObj, botUser = { id: undefined }) => {
       break
     case commandToString.help:
       sendCommandList(eventObj)
+      break
+    case commandToString.kick:
+      kickPlayer(eventObj, queue)
       break
     default:
       return

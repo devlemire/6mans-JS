@@ -2,35 +2,40 @@ const randomstring = require('randomstring')
 const playerIdsIndexedToMentions = require('../utils/playerIdsIndexedToMentions')
 const { commandToString } = require('./commands')
 const { lobbyName } = process.env
+const cloneDeep = require('lodash.clonedeep')
 
 let lobbyId = 0
+
+const queueResetValues = {
+  votingInProgress: false,
+  votes: {
+    r: 0,
+    c: 0,
+    playersWhoVoted: {},
+  },
+  creatingTeamsInProgress: false,
+  teams: {
+    blue: {
+      players: [],
+      captain: undefined,
+      voiceChannelID: undefined,
+      voiceChannelHistory: {},
+    },
+    orange: {
+      players: [],
+      captain: undefined,
+      voiceChannelID: undefined,
+      voiceChannelHistory: {},
+    },
+  },
+  readyToJoin: false,
+}
 
 function createQueue() {
   return {
     players: [],
     playerIdsIndexed: {},
-    votingInProgress: false,
-    votes: {
-      r: 0,
-      c: 0,
-      playersWhoVoted: {},
-    },
-    creatingTeamsInProgress: false,
-    teams: {
-      blue: {
-        players: [],
-        captain: undefined,
-        voiceChannelID: undefined,
-        voiceChannelHistory: {},
-      },
-      orange: {
-        players: [],
-        captain: undefined,
-        voiceChannelID: undefined,
-        voiceChannelHistory: {},
-      },
-    },
-    readyToJoin: false,
+    ...cloneDeep(queueResetValues),
     lobby: {
       id: ++lobbyId,
       name: `${lobbyName}${lobbyId}`,
@@ -121,8 +126,29 @@ const removeOfflinePlayerFromQueue = ({ playerId, playerChannels }) => {
   }
 }
 
+const kickPlayer = (playerIndex, queue, messageChannel) => {
+  const playerObj = queue.players[playerIndex]
+  const playerId = playerObj.id
+
+  delete queue.playerIdsIndexed[playerId]
+  queue.players.splice(playerIndex, 1)
+
+  if (messageChannel) {
+    messageChannel(`<@${playerId}> has been kicked. You can check the lobby status with ${commandToString.status}`)
+  }
+
+  resetPlayerQueue(queue.lobby.id)
+}
+
+const resetPlayerQueue = (lobbyId) => {
+  const queueIndex = queues.findIndex((queueObj) => queueObj.lobby.id === lobbyId)
+  queues[queueIndex] = Object.assign({}, queues[queueIndex], cloneDeep(queueResetValues))
+}
+
 module.exports = {
   determinePlayerQueue,
   deletePlayerQueue,
   removeOfflinePlayerFromQueue,
+  kickPlayer,
+  resetPlayerQueue,
 }

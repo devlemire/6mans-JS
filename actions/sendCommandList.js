@@ -1,6 +1,6 @@
 const { commandToString } = require('../utils/commands')
 
-module.exports = eventObj => {
+module.exports = (eventObj) => {
   const channel = eventObj.author.lastMessage.channel
 
   channel.send({
@@ -30,6 +30,10 @@ module.exports = eventObj => {
         {
           name: commandToString.help,
           value: 'Display all the commands the bot has to offer',
+        },
+        {
+          name: commandToString.kick,
+          value: 'Vote to kick an AFK player',
         },
       ],
     },

@@ -6,6 +6,7 @@ exports.commandToString = {
   r: '!6m-r',
   c: '!6m-c',
   help: '!6m-help',
+  kick: '!6m-kick',
 }
 
 exports.validCommandCheck = {
@@ -15,4 +16,5 @@ exports.validCommandCheck = {
   '!6m-votestatus': true,
   '!6m-r': true,
   '!6m-c': true,
+  '!6m-kick': true,
 }

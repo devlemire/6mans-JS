@@ -5,6 +5,7 @@ const submitVote = require('./submitVote')
 const getVoteStatus = require('./getVoteStatus')
 const sendCommandList = require('./sendCommandList')
 const createVoiceChannels = require('./createVoiceChannels')
+const kickPlayer = require('./kickPlayer')
 
 module.exports = {
   enterQueue,
@@ -14,4 +15,5 @@ module.exports = {
   getVoteStatus,
   sendCommandList,
   createVoiceChannels,
+  kickPlayer,
 }
