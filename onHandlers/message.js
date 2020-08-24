@@ -41,6 +41,7 @@ module.exports = async (eventObj, botUser = { id: undefined }) => {
   if (channelName && eventObj.channel.name !== channelName) {
     if (commonLogCheck) {
       console.log('The user is typing on a different channel, disregarding message')
+      console.log(eventObj.channel.name + ' !== ' + channelName)
     }
 
     return
