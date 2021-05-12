@@ -64,4 +64,5 @@ Go back to your discord application and then the bot tab and finally copy the bo
 # Common Gotchas
 
 - Creating a category on your discord server is <b>not</b> optional. This is needed so the bot knows where to make the voice channels.
+- Set your `CHANNEL_NAME` and `CATEGORY_NAME` to exactly how they are displayed in discord.
 <img src="https://github.com/devlemire/6mans-JS/blob/master/screenshots/category.png">
