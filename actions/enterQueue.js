@@ -2,7 +2,7 @@ const startVote = require('./startVote')
 
 module.exports = (eventObj, queue) => {
   const { players, playerIdsIndexed } = queue
-  const channel = eventObj.author.lastMessage.channel
+  const channel = eventObj.channel
   const playerId = eventObj.author.id
   const username = eventObj.author.username
   const dmPlayer = async (msg) => await eventObj.author.send(msg)

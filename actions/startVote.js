@@ -3,7 +3,7 @@ const { commandToString } = require('../utils/commands')
 
 module.exports = (eventObj, queue) => {
   const { playerIdsIndexed, lobby } = queue
-  const channel = eventObj.author.lastMessage.channel
+  const channel = eventObj.channel
   queue.votingInProgress = true
 
   channel.send(playerIdsIndexedToMentions(playerIdsIndexed))

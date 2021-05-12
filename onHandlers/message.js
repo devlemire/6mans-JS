@@ -66,7 +66,7 @@ module.exports = async (eventObj, botUser = { id: undefined }) => {
   // Dont execute any logic on bot messages
   if (authorId === botUser.id) return
 
-  const channel = eventObj.author.lastMessage.channel
+  const channel = eventObj.channel
   const command = msg.split(' ')[0]
   const playerId = eventObj.author.id
   const queue = determinePlayerQueue(playerId, command)

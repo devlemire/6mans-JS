@@ -3,7 +3,7 @@ const createLobbyInfo = require('./createLobbyInfo')
 
 module.exports = (eventObj, queue) => {
   const { lobby, players, teams } = queue
-  const channel = eventObj.author.lastMessage.channel
+  const channel = eventObj.channel
   queue.votingInProgress = false
   queue.creatingTeamsInProgress = true
 

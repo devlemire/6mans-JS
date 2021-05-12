@@ -1,6 +1,6 @@
 module.exports = async (eventObj, queue) => {
   const { lobby, teams } = queue
-  const channel = eventObj.author.lastMessage.channel
+  const channel = eventObj.channel
   const guild = eventObj.guild
   const parentChannel = guild.channels.find(
     channelObj => channelObj.name === process.env.categoryName && channelObj.type === 'category'

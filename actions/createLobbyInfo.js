@@ -4,7 +4,7 @@ const { lobbyRegion, lobbySeries } = process.env
 
 module.exports = async (eventObj, queue) => {
   const { teams, lobby } = queue
-  const channel = eventObj.author.lastMessage.channel
+  const channel = eventObj.channel
 
   const randomTeam = randomNumber(1) === 0 ? 'blue' : 'orange'
   const randomPlayer = randomNumber(2)

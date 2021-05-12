@@ -1,7 +1,7 @@
 const { commandToString } = require('../utils/commands')
 
 module.exports = (eventObj) => {
-  const channel = eventObj.author.lastMessage.channel
+  const channel = eventObj.channel
 
   channel.send({
     embed: {

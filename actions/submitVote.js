@@ -5,7 +5,7 @@ const playerNotInQueue = require('../utils/playerNotInQueue')
 
 module.exports = (eventObj, queue) => {
   const { votes, votingInProgress } = queue
-  const channel = eventObj.author.lastMessage.channel
+  const channel = eventObj.channel
   const playerId = eventObj.author.id
 
   // Player is not in the queue

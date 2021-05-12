@@ -3,7 +3,7 @@ const playerIdsIndexedToMentions = require('../utils/playerIdsIndexedToMentions'
 
 module.exports = (eventObj, queue) => {
   const { players, playerIdsIndexed, lobby, votingInProgress, creatingTeamsInProgress, readyToJoin } = queue
-  const channel = eventObj.author.lastMessage.channel
+  const channel = eventObj.channel
   const playerId = eventObj.author.id
   const remainingPlayersRequired = 6 - players.length
 

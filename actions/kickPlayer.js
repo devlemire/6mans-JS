@@ -3,7 +3,7 @@ const { kickPlayer } = require('../utils/managePlayerQueues')
 
 module.exports = async (eventObj, queue) => {
   const { players, lobby, playerIdsIndexed } = queue
-  const channel = eventObj.author.lastMessage.channel
+  const channel = eventObj.channel
   const playerId = eventObj.author.id
 
   // Player is not in the queue

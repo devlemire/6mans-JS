@@ -3,7 +3,7 @@ const playerNotInQueue = require('../utils/playerNotInQueue')
 
 module.exports = (eventObj, queue) => {
   let { players, playerIdsIndexed, lobby } = queue
-  const channel = eventObj.author.lastMessage.channel
+  const channel = eventObj.channel
   const playerId = eventObj.author.id
   const playerIndexInQueue = players.findIndex(playerObj => playerObj.id === playerId)
 
