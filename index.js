@@ -39,12 +39,12 @@ bot.on('ready', (e) => {
 bot.on('message', (eventObj) => messageHandler(eventObj, botUser))
 
 // Remove players from the queue if they go offline
-bot.on('presenceUpdate', (oldMember, newMember) => {
-  if (newMember.presence.status === 'offline') {
-    // Remove this player from the queue if they are in one
-    removeOfflinePlayerFromQueue({ playerId: newMember.user.id, playerChannels: newMember.client.channels })
-  }
-})
+// bot.on('presenceUpdate', (oldMember, newMember) => {
+//   if (newMember.presence.status === 'offline') {
+//     // Remove this player from the queue if they are in one
+//     removeOfflinePlayerFromQueue({ playerId: newMember.user.id, playerChannels: newMember.client.channels })
+//   }
+// })
 
 // Delete team voice channels and queues
 bot.on('voiceStateUpdate', voiceStateUpdateHandler)

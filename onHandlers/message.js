@@ -30,13 +30,13 @@ module.exports = async (eventObj, botUser = { id: undefined }) => {
   // If there is a channelName provided in the .env and the channel name doesn't match,
   // If the user is in invisible mode or offline,
   // See ya l8r virgin
-  if (eventObj.author.presence.status === 'offline') {
-    if (commonLogCheck) {
-      console.log('The user is offline, disregarding message')
-    }
+  // if (eventObj.author.presence.status === 'offline') {
+  //   if (commonLogCheck) {
+  //     console.log('The user is offline, disregarding message')
+  //   }
 
-    return
-  }
+  //   return
+  // }
 
   if (channelName && eventObj.channel.name !== channelName) {
     if (commonLogCheck) {
