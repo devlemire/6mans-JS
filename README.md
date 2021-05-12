@@ -39,23 +39,24 @@ Go back to your discord application and then the bot tab and finally copy the bo
     categoryName=CATEGORY_NAME
     channelName=CHANNEL_NAME
     debugLogs=true
+    lobbySeries=LOBBY_SERIES
+    lobbyRegion=LOBBY_REGION
+    lobbyName=LOBBY_NAME
     ```
-    - Replace `YOUR_TOKEN` with the bot token you copied from earlier
-    - Replace `CHANNEL_NAME` with the channel name you want the bot to listen on
-    - Replace `CATEGORY_NAME` with the category name you want the bot to create voice channels under
- 
+    - Replace `YOUR_TOKEN` with the bot token you copied from earlier.
+    - Replace `CHANNEL_NAME` with the channel name you want the bot to listen on.
+    - Replace `CATEGORY_NAME` with the category name you want the bot to create voice channels under.
+    - Replace `LOBBY_SERIES` with the desired series length. Best of 3.. 5... etc. Just give a number.
+    - Replace `LOBBY_REGION` with the desired private match region. Example; "US-East".
+    - Replace `LOBBY_NAME` with your brand (server-name). This is the name that will appear in the bot's information messages.
+
 ### 9) Run the server
 - Go back to your command prompt, make sure you are in the directory of the folder you unzipped earlier, and run `node index.js`
 - In a Discord server where you have added the bot, type `!6m-help` to verify the bot is working and to see a list of helpful commands.
   - Make sure you type the command in the channel that matches your `channelName` env variable
-  - Make sure you are appearing online in Discord
 
 # After initial setup - How to run
 
 - Open cmd
 - Change directories to where you put the bot
 - Run `node index.js`
-
-# Common Gotchas as of v1.9.2
-
-- You <b>must</b> be online when interacting with the 6mans bot
