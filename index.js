@@ -1,3 +1,4 @@
+// test
 // Dependencies
 require('dotenv').config({ path: `${__dirname}/.env` })
 const Discord = require('discord.js')
