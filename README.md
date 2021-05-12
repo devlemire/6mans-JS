@@ -60,3 +60,7 @@ Go back to your discord application and then the bot tab and finally copy the bo
 - Open cmd
 - Change directories to where you put the bot
 - Run `node index.js`
+
+# Common Gotchas
+
+- Creating a category on your discord server is <b>not</b> optional. This is needed so the bot knows where to make the voice channels.
