@@ -1,3 +1,7 @@
+# Disclaimer
+
+Discord has the ability to update their API structure even though I'm not updating my package version. That means the bot can break at any time when Discord flips switches on their API. I do not have the time to keep up with their development team. With that being said, this bot <b>may be in a broken state</b>. I will leave this repository up as a reference to other developers. But at this time, support for this project is discontinued for me. Sorry! Life is too busy.
+
 # How to setup
 
 ### 1) Install node for Windows
